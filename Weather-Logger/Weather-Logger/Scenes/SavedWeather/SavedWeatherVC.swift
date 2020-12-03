@@ -27,10 +27,9 @@ class SavedWeatherVC: UIViewController {
         savedWeatherVM.delegate = self
     }
     
-    @IBAction func onSavePressed(_ sender: UIButton) {
+    @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
         savedWeatherVM.saveCurrentWeather()
     }
-    
 }
 
 extension SavedWeatherVC: UITableViewDelegate {
