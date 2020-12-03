@@ -66,7 +66,9 @@ class WeatherAPI: WeatherAPIProtocol {
     
     // TODO: Finish
     func getWeatherData(city: String = "Riga", completion: @escaping (CityWeatherData?) -> Void) {
-        let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=511bd6233d15a788fa5d8d6ddd83b7c8&units=metric")!
+        let str = "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=511bd6233d15a788fa5d8d6ddd83b7c8&units=metric"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let url = URL(string: str!)!
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
 
             if let data = data {
