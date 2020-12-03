@@ -63,27 +63,22 @@ struct CityWeatherData: Codable {
 
 
 class WeatherAPI: WeatherAPIProtocol {
+    
+    // TODO: Finish
     func getWeatherData(city: String = "Riga", completion: @escaping (CityWeatherData?) -> Void) {
-        let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=511bd6233d15a788fa5d8d6ddd83b7c8")!
+        let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=511bd6233d15a788fa5d8d6ddd83b7c8&units=metric")!
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
 
-            if error != nil || data == nil {
-                print("Client error!")
-                return
+            if let data = data {
+                let decodedWeatherData = try? JSONDecoder().decode(CityWeatherData?.self, from: data)
+                completion(decodedWeatherData)
             }
-
-            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
-                print("Server error!")
-                return
+            
+            if let error = error {
+                print(error.localizedDescription)
             }
-
-            guard let mime = response.mimeType, mime == "application/json" else {
-                print("Wrong MIME type!")
-                return
-            }
-
-            let dataDecoded = try? JSONDecoder().decode(CityWeatherData?.self, from: data!)
-            completion(dataDecoded)
+            
+            completion(nil)
             
         }
 

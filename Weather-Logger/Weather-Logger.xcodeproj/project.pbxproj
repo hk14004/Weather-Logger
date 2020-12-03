@@ -18,6 +18,8 @@
 		D49094582578F77E006D986A /* CityWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094572578F77E006D986A /* CityWeatherData.swift */; };
 		D490945F25790374006D986A /* SavedWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490945E25790374006D986A /* SavedWeatherVC.swift */; };
 		D490946425790380006D986A /* SavedWeatherVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490946325790380006D986A /* SavedWeatherVM.swift */; };
+		D490946D257911A8006D986A /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490946C257911A8006D986A /* DAO.swift */; };
+		D4909473257928CC006D986A /* SavedWeatherCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4909472257928CC006D986A /* SavedWeatherCellVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		D49094572578F77E006D986A /* CityWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherData.swift; sourceTree = "<group>"; };
 		D490945E25790374006D986A /* SavedWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWeatherVC.swift; sourceTree = "<group>"; };
 		D490946325790380006D986A /* SavedWeatherVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedWeatherVM.swift; sourceTree = "<group>"; };
+		D490946C257911A8006D986A /* DAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
+		D4909472257928CC006D986A /* SavedWeatherCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWeatherCellVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,7 @@
 		D49094202578EE53006D986A /* Weather-Logger */ = {
 			isa = PBXGroup;
 			children = (
+				D490946B2579119B006D986A /* Utility */,
 				D49094212578EE53006D986A /* AppDelegate.swift */,
 				D49094232578EE53006D986A /* SceneDelegate.swift */,
 				D490945C25790336006D986A /* Scenes */,
@@ -147,10 +152,27 @@
 		D490945D2579033E006D986A /* SavedWeather */ = {
 			isa = PBXGroup;
 			children = (
+				D4909471257928B7006D986A /* Support */,
 				D490945E25790374006D986A /* SavedWeatherVC.swift */,
 				D490946325790380006D986A /* SavedWeatherVM.swift */,
 			);
 			path = SavedWeather;
+			sourceTree = "<group>";
+		};
+		D490946B2579119B006D986A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D490946C257911A8006D986A /* DAO.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		D4909471257928B7006D986A /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				D4909472257928CC006D986A /* SavedWeatherCellVM.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,6 +305,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D490946D257911A8006D986A /* DAO.swift in Sources */,
+				D4909473257928CC006D986A /* SavedWeatherCellVM.swift in Sources */,
 				D49094222578EE53006D986A /* AppDelegate.swift in Sources */,
 				D490942C2578EE54006D986A /* Weather_Logger.xcdatamodeld in Sources */,
 				D490945F25790374006D986A /* SavedWeatherVC.swift in Sources */,
