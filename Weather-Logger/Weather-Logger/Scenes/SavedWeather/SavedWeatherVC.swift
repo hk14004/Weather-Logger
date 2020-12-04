@@ -35,12 +35,12 @@ class SavedWeatherVC: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    func handleInvisibleTable() {
+    private func handleInvisibleTable() {
         tableView.isHidden = true
         emptyTableLabel.isHidden = false
     }
     
-    func handleVisibleTable() {
+    private func handleVisibleTable() {
         tableView.isHidden = false
         emptyTableLabel.isHidden = true
     }
