@@ -28,9 +28,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l5z-zV-rzw">
-                                                    <rect key="frame" x="20" y="10" width="33" height="20.5"/>
+                                                    <rect key="frame" x="20" y="10" width="34.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -46,12 +46,21 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add logs by tapping +" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYk-f4-4ft">
+                                <rect key="frame" x="0.0" y="427.5" width="414" height="41"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <color key="textColor" systemColor="systemGray5Color"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="pYk-f4-4ft" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="0hy-JI-so2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mnH-5b-8yl" secondAttribute="bottom" id="Ot5-MO-0Hz"/>
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="YYz-59-4L6"/>
+                            <constraint firstAttribute="trailing" secondItem="pYk-f4-4ft" secondAttribute="trailing" id="beV-jf-3cB"/>
+                            <constraint firstItem="pYk-f4-4ft" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jIq-FB-CGA"/>
+                            <constraint firstItem="pYk-f4-4ft" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oFq-pI-Nm2"/>
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tPB-Ak-T21"/>
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vTO-fL-iDL"/>
                         </constraints>
@@ -64,6 +73,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emptyTableLabel" destination="pYk-f4-4ft" id="cqi-lA-YEz"/>
                         <outlet property="tableView" destination="mnH-5b-8yl" id="JRl-qD-dQX"/>
                     </connections>
                 </viewController>
@@ -93,6 +103,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

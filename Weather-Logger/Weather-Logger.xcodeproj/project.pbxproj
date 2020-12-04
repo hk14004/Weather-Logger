@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D47809AA257A5A0900052D6B /* UITableViewCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */; };
 		D49094222578EE53006D986A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094212578EE53006D986A /* AppDelegate.swift */; };
 		D49094242578EE53006D986A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094232578EE53006D986A /* SceneDelegate.swift */; };
 		D49094292578EE54006D986A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D49094272578EE54006D986A /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtensions.swift; sourceTree = "<group>"; };
 		D490941E2578EE53006D986A /* Weather-Logger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-Logger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49094212578EE53006D986A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D49094232578EE53006D986A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				D490942F2578EE54006D986A /* LaunchScreen.storyboard */,
 				D49094322578EE54006D986A /* Info.plist */,
 				D490942A2578EE54006D986A /* Weather_Logger.xcdatamodeld */,
+				D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */,
 			);
 			path = "Weather-Logger";
 			sourceTree = "<group>";
@@ -152,9 +155,9 @@
 		D490945D2579033E006D986A /* SavedWeather */ = {
 			isa = PBXGroup;
 			children = (
-				D4909471257928B7006D986A /* Support */,
 				D490945E25790374006D986A /* SavedWeatherVC.swift */,
 				D490946325790380006D986A /* SavedWeatherVM.swift */,
+				D4909471257928B7006D986A /* Support */,
 			);
 			path = SavedWeather;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			files = (
 				D490946D257911A8006D986A /* DAO.swift in Sources */,
 				D4909473257928CC006D986A /* SavedWeatherCellVM.swift in Sources */,
+				D47809AA257A5A0900052D6B /* UITableViewCellExtensions.swift in Sources */,
 				D49094222578EE53006D986A /* AppDelegate.swift in Sources */,
 				D490942C2578EE54006D986A /* Weather_Logger.xcdatamodeld in Sources */,
 				D490945F25790374006D986A /* SavedWeatherVC.swift in Sources */,

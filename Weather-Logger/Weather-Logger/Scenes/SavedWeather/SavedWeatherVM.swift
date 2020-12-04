@@ -16,7 +16,13 @@ class SavedWeatherVM: NSObject {
     
     private let weatherDao = EntityDAO<CityWeatherEntity>()
     
-    private(set) var savedWeatherList: [CityWeatherEntity] = []
+    private(set) var savedWeatherList: [CityWeatherEntity] = [] {
+        didSet {
+            if (oldValue.isEmpty != savedWeatherList.isEmpty) {
+                delegate?.listVisibilityChanged(visible: !savedWeatherList.isEmpty)
+            }
+        }
+    }
     
     var locManager = CLLocationManager()
     
@@ -24,14 +30,17 @@ class SavedWeatherVM: NSObject {
         self.weatherAPI = weatherAPI
         super.init()
         weatherDao.delegate = self
-        savedWeatherList = weatherDao.loadData(sectionNameKeyPath: nil, cacheName: nil, requestModifier: { (request) in
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
-        })
         locManager.requestWhenInUseAuthorization()
     }
     
+    func loadData() {
+        savedWeatherList = weatherDao.loadData(sectionNameKeyPath: nil, cacheName: nil, requestModifier: { (request) in
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        })
+    }
+    
     func getWeatherCellVM(at: IndexPath) -> SavedWeatherCellVM {
-        SavedWeatherCellVM(weatherModel: savedWeatherList[at.row])
+        return SavedWeatherCellVM(weatherModel: savedWeatherList[at.row])
     }
     
     func saveCurrentWeather() {
@@ -66,10 +75,7 @@ class SavedWeatherVM: NSObject {
                 
                 self?.weatherDao.save()
             }
-            
         }
-
-
     }
     
     func deleteWeatherData(at: IndexPath) {
@@ -138,11 +144,6 @@ extension SavedWeatherVM: NSFetchedResultsControllerDelegate {
                 delegate?.rowDeleted(at: indexPath)
             }
             break
-        case .update:
-            if let indexPath = indexPath {
-                delegate?.rowUpdated(at: indexPath)
-            }
-            break
         default:
             break
         }
@@ -154,5 +155,5 @@ protocol SavedWeatherVMDelegate: class {
     func weatherListChanged()
     func rowAdded(at: IndexPath)
     func rowDeleted(at: IndexPath)
-    func rowUpdated(at: IndexPath)
+    func listVisibilityChanged(visible: Bool)
 }
