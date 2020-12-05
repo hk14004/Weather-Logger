@@ -46,7 +46,7 @@ class SavedWeatherVC: UIViewController {
     }
     
     @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
-        savedWeatherVM.saveCurrentWeather()
+        savedWeatherVM.logCurrentWeather()
     }
 }
 

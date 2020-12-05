@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreLocation
+import PromiseKit
 
 struct CityWeatherData: Codable {
     let timezone: Int
@@ -62,32 +64,47 @@ struct CityWeatherData: Codable {
 }
 
 
-class WeatherAPI: WeatherAPIProtocol {
+class WeatherService: WeatherProviderProtocol {
     
     // TODO: Finish
-    func getWeatherData(city: String = "Riga", completion: @escaping (CityWeatherData?) -> Void) {
-        let str = "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=511bd6233d15a788fa5d8d6ddd83b7c8&units=metric"
-            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        let url = URL(string: str!)!
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//    func getWeatherData(city: String = "Riga", completion: @escaping (CityWeatherData?) -> Void) {
+//        let str = "http://api.openweathermap.org/data/2.5/weather?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)&appid=\(appID)"
+//        let str = "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=511bd6233d15a788fa5d8d6ddd83b7c8&units=metric"
+//            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//        let url = URL(string: str!)!
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//
+//            if let data = data {
+//                let decodedWeatherData = try? JSONDecoder().decode(CityWeatherData?.self, from: data)
+//                completion(decodedWeatherData)
+//            }
+//
+//            if let error = error {
+//                print(error.localizedDescription)
+//            }
+//
+//            completion(nil)
+//
+//        }
+//
+//        task.resume()
+//    }
+    
+    let API_KEY = "511bd6233d15a788fa5d8d6ddd83b7c8"
+    
+    func getWeatherData(location: CLLocation) -> Promise<CityWeatherData> {
+        let str = "http://api.openweathermap.org/data/2.5/weather?lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)&appid=\(API_KEY)&units=metric"
 
-            if let data = data {
-                let decodedWeatherData = try? JSONDecoder().decode(CityWeatherData?.self, from: data)
-                completion(decodedWeatherData)
-            }
-            
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            completion(nil)
-            
-        }
+        let url = URL(string: str)!
 
-        task.resume()
+            return firstly {
+              URLSession.shared.dataTask(.promise, with: url)
+            }.compactMap {
+              return try JSONDecoder().decode(CityWeatherData.self, from: $0.data)
+            }
     }
 }
 
-protocol WeatherAPIProtocol {
-    func getWeatherData(city: String, completion: @escaping (CityWeatherData?) -> Void)
+protocol WeatherProviderProtocol {
+    func getWeatherData(location: CLLocation) -> Promise<CityWeatherData>
 }
