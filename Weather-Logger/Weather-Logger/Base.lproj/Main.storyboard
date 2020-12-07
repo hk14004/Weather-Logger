@@ -74,6 +74,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emptyTableLabel" destination="pYk-f4-4ft" id="cqi-lA-YEz"/>
+                        <outlet property="saveLogButton" destination="Lgv-Vm-oxN" id="XbA-lL-vMk"/>
                         <outlet property="tableView" destination="mnH-5b-8yl" id="JRl-qD-dQX"/>
                     </connections>
                 </viewController>

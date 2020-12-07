@@ -13,7 +13,7 @@ class SavedWeatherVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveLogButton: UIBarButtonItem!
     
     @IBOutlet weak var emptyTableLabel: UILabel!
     
@@ -47,6 +47,10 @@ class SavedWeatherVC: UIViewController {
     
     @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
         savedWeatherVM.logCurrentWeather()
+    }
+    
+    private func controls(enabled: Bool) {
+        saveLogButton.isEnabled = enabled
     }
 }
 
@@ -92,6 +96,15 @@ extension SavedWeatherVC: UITableViewDataSource {
 }
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
+    
+    func loggingStateChanged(_ isLogging: Bool) {
+        if isLogging {
+            controls(enabled: false)
+        } else {
+            controls(enabled: true)
+        }
+    }
+    
     func onError(title: String, message: String) {
         displayConfirmationAlert(title: title, message: message)
     }

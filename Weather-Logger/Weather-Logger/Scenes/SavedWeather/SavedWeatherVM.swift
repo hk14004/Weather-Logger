@@ -19,6 +19,14 @@ class SavedWeatherVM: NSObject {
     // TODO: Plug n play persistence
     private let weatherDao = EntityDAO<CityWeatherEntity>()
     
+    private var loggingWeather: Bool = false {
+        didSet {
+            if (oldValue != loggingWeather) {
+                delegate?.loggingStateChanged(loggingWeather)
+            }
+        }
+    }
+    
     private(set) var savedWeatherList: [CityWeatherEntity] = [] {
         didSet {
             if (oldValue.isEmpty != savedWeatherList.isEmpty) {
@@ -57,13 +65,17 @@ class SavedWeatherVM: NSObject {
     }
     
     func logCurrentWeather() {
+        loggingWeather = true
         firstly {
             CLLocationManager.requestLocation().lastValue
         }.then { (location) in
             self.weatherProvider.getWeatherData(location: location)
         }.done  { (weatherData) in
             self.storeWeatherLog(from: weatherData)
-        }.catch { (error) in
+        }.ensure {
+            self.loggingWeather = false
+        }
+        .catch { (error) in
             print(error.localizedDescription)
             self.delegate?.onError(title: NSLocalizedString("Could not get current weather", comment: ""),
                                    message: NSLocalizedString("Please, try again later", comment: ""))
@@ -111,4 +123,5 @@ protocol SavedWeatherVMDelegate: class {
     func rowDeleted(at: IndexPath)
     func listVisibilityChanged(visible: Bool)
     func onError(title: String, message: String)
+    func loggingStateChanged(_ isLogging: Bool)
 }
