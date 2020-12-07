@@ -19,12 +19,17 @@ class SavedWeatherVC: UIViewController {
     
     // MARK: Vars
     
+    private lazy var loadingSpinner: UIActivityIndicatorView = {
+        return UIActivityIndicatorView(style: .large)
+    }()
+    
     private let savedWeatherVM = SavedWeatherVM()
     
     // MARK: Functions
     
     override func viewDidLoad() {
         setupTableView()
+        setupLoadingView()
         savedWeatherVM.delegate = self
         savedWeatherVM.loadData()
     }
@@ -51,6 +56,29 @@ class SavedWeatherVC: UIViewController {
     
     private func controls(enabled: Bool) {
         saveLogButton.isEnabled = enabled
+    }
+    
+    private func setupLoadingView() {
+        if savedWeatherVM.loggingWeather {
+            loadingSpinner.startAnimating()
+            loadingSpinner.isHidden = false
+        }
+        view.addSubview(loadingSpinner)
+        loadingSpinner.translatesAutoresizingMaskIntoConstraints = false
+        loadingSpinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingSpinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    private func changeState(loading: Bool) {
+        if loading {
+            controls(enabled: false)
+            loadingSpinner.isHidden = false
+            loadingSpinner.startAnimating()
+        } else {
+            controls(enabled: true)
+            loadingSpinner.isHidden = true
+            loadingSpinner.stopAnimating()
+        }
     }
 }
 
@@ -96,13 +124,8 @@ extension SavedWeatherVC: UITableViewDataSource {
 }
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
-    
     func loggingStateChanged(_ isLogging: Bool) {
-        if isLogging {
-            controls(enabled: false)
-        } else {
-            controls(enabled: true)
-        }
+        changeState(loading: isLogging)
     }
     
     func onError(title: String, message: String) {

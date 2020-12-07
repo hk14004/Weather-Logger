@@ -19,7 +19,7 @@ class SavedWeatherVM: NSObject {
     // TODO: Plug n play persistence
     private let weatherDao = EntityDAO<CityWeatherEntity>()
     
-    private var loggingWeather: Bool = false {
+    private(set) var loggingWeather: Bool = false {
         didSet {
             if (oldValue != loggingWeather) {
                 delegate?.loggingStateChanged(loggingWeather)
