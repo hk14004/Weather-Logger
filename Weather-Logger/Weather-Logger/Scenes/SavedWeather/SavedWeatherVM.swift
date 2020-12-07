@@ -35,6 +35,8 @@ class SavedWeatherVM: NSObject {
         }
     }
     
+    private(set) var selectedRow: IndexPath?
+    
     init(weatherProvider: WeatherProviderProtocol = WeatherService()) {
         self.weatherProvider = weatherProvider
         super.init()
@@ -84,6 +86,19 @@ class SavedWeatherVM: NSObject {
     
     func deleteWeatherData(at: IndexPath) {
         weatherDao.delete(at: at)
+    }
+    
+    func selectRow(at: IndexPath) {
+        selectedRow = at
+    }
+    
+    func getSelectedWeather() -> CityWeatherEntity? {
+        guard let selected = selectedRow,
+            selected.row < savedWeatherList.count else {
+            return nil
+        }
+        
+        return savedWeatherList[selected.row]
     }
 }
 

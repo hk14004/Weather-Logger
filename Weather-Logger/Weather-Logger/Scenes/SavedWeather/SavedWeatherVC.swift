@@ -80,6 +80,18 @@ class SavedWeatherVC: UIViewController {
             loadingSpinner.stopAnimating()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showWeatherDetails" {
+            guard
+                let weatherDetailsVC = segue.destination as? WeatherDetailsVC,
+                let selectedWeather = savedWeatherVM.getSelectedWeather()
+            else {
+                return
+            }
+            weatherDetailsVC.weatherDetailsVM.display(weather: selectedWeather)
+        }
+    }
 }
 
 extension SavedWeatherVC: UITableViewDelegate {
@@ -120,6 +132,11 @@ extension SavedWeatherVC: UITableViewDataSource {
         cell.setup(with: cellVM)
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        savedWeatherVM.selectRow(at: indexPath)
+        performSegue(withIdentifier: "showWeatherDetails", sender: self)
     }
 }
 

@@ -43,6 +43,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="2zo-oM-F3G" kind="show" identifier="showWeatherDetails" id="TdE-Kc-cHb"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -81,6 +84,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1050.7246376811595" y="69.642857142857139"/>
+        </scene>
+        <!--Weather Details-->
+        <scene sceneID="hzc-Zk-lrS">
+            <objects>
+                <viewController title="Weather Details" id="2zo-oM-F3G" customClass="WeatherDetailsVC" customModule="Weather_Logger" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Ay-eE-d98">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="bat-mC-dd0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Pfp-1H-er5"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kxp-iv-JAn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1899" y="70"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JOi-ZW-BIX">
