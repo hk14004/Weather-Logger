@@ -11,7 +11,15 @@ class SavedWeatherCellVM {
     
     var cellTitle: String {
         get {
-            return city + ", " + tempString
+            var title = ""
+            if !tempString.isEmpty {
+                title += tempString
+            }
+            
+            if !city.isEmpty {
+                title = "\(city), " + title
+            }
+            return title
         }
     }
     let tempString: String
@@ -21,9 +29,10 @@ class SavedWeatherCellVM {
     let city: String
     
     init(weatherModel: CityWeatherEntity) {
-        tempString = "\(weatherModel.temp) °C"
+        let tempMeasurement = Measurement(value: weatherModel.temp, unit: UnitTemperature.celsius)
+        tempString = "\(tempMeasurement)"
         if let date = weatherModel.date {
-            dateString = SavedWeatherCellVM.format(date: date)
+            dateString = SavedWeatherCellVM.formatWeather(date: date)
         } else {
             dateString = ""
         }
@@ -31,7 +40,7 @@ class SavedWeatherCellVM {
         city = weatherModel.city ?? ""
     }
     
-    private static func format(date: Date) -> String {
+    private static func formatWeather(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .medium

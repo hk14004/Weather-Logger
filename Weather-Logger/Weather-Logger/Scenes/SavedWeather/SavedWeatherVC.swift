@@ -92,6 +92,10 @@ extension SavedWeatherVC: UITableViewDataSource {
 }
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
+    func onError(title: String, message: String) {
+        displayConfirmationAlert(title: title, message: message)
+    }
+    
     func rowAdded(at: IndexPath) {
         tableView.insertRows(at: [at], with: .fade)
     }

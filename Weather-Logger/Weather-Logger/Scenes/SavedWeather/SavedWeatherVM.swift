@@ -64,11 +64,13 @@ class SavedWeatherVM: NSObject {
         }.done  { (weatherData) in
             self.storeWeatherLog(from: weatherData)
         }.catch { (error) in
-            print("Error", error.localizedDescription)
+            print(error.localizedDescription)
+            self.delegate?.onError(title: NSLocalizedString("Could not get current weather", comment: ""),
+                                   message: NSLocalizedString("Please, try again later", comment: ""))
         }
     }
     
-    private func deleteWeatherData(at: IndexPath) {
+    func deleteWeatherData(at: IndexPath) {
         weatherDao.delete(at: at)
     }
 }
@@ -108,4 +110,5 @@ protocol SavedWeatherVMDelegate: class {
     func rowAdded(at: IndexPath)
     func rowDeleted(at: IndexPath)
     func listVisibilityChanged(visible: Bool)
+    func onError(title: String, message: String)
 }
