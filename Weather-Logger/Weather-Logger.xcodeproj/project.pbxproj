@@ -10,6 +10,7 @@
 		26AF8B5CF2EC9676A96632BF /* Pods_Weather_LoggerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E7B6EF46B25C5406798956 /* Pods_Weather_LoggerTests.framework */; };
 		584D1AB40F05AD4E94EE9928 /* Pods_Weather_Logger_Weather_LoggerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 170FBD8B381EADE144097051 /* Pods_Weather_Logger_Weather_LoggerUITests.framework */; };
 		6549C2BCD5FAA5CA96E9656C /* Pods_Weather_Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1AA2CB34151EA213F7485F /* Pods_Weather_Logger.framework */; };
+		D43FF9ED257FBBA30085E382 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FF9EC257FBBA30085E382 /* WeatherService.swift */; };
 		D47809AA257A5A0900052D6B /* UITableViewCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */; };
 		D49094222578EE53006D986A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094212578EE53006D986A /* AppDelegate.swift */; };
 		D49094242578EE53006D986A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094232578EE53006D986A /* SceneDelegate.swift */; };
@@ -55,6 +56,7 @@
 		69E7B6EF46B25C5406798956 /* Pods_Weather_LoggerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_LoggerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1AA2CB34151EA213F7485F /* Pods_Weather_Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_Logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE70D22DDA84D5090CF5C933 /* Pods-Weather-LoggerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather-LoggerTests.debug.xcconfig"; path = "Target Support Files/Pods-Weather-LoggerTests/Pods-Weather-LoggerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D43FF9EC257FBBA30085E382 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtensions.swift; sourceTree = "<group>"; };
 		D490941E2578EE53006D986A /* Weather-Logger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-Logger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49094212578EE53006D986A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,31 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D43FF9F4257FBBCC0085E382 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D43FF9F9257FBCDE0085E382 /* WeatherService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D43FF9F8257FBCC30085E382 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				D49094572578F77E006D986A /* CityWeatherDataResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		D43FF9F9257FBCDE0085E382 /* WeatherService */ = {
+			isa = PBXGroup;
+			children = (
+				D43FF9EC257FBBA30085E382 /* WeatherService.swift */,
+				D43FF9F8257FBCC30085E382 /* Responses */,
+			);
+			path = WeatherService;
+			sourceTree = "<group>";
+		};
 		D49094152578EE53006D986A = {
 			isa = PBXGroup;
 			children = (
@@ -147,17 +174,16 @@
 		D49094202578EE53006D986A /* Weather-Logger */ = {
 			isa = PBXGroup;
 			children = (
-				D490946B2579119B006D986A /* Utility */,
 				D49094212578EE53006D986A /* AppDelegate.swift */,
 				D49094232578EE53006D986A /* SceneDelegate.swift */,
+				D43FF9F4257FBBCC0085E382 /* Services */,
 				D490945C25790336006D986A /* Scenes */,
-				D49094572578F77E006D986A /* CityWeatherDataResponse.swift */,
 				D49094272578EE54006D986A /* Main.storyboard */,
 				D490942D2578EE54006D986A /* Assets.xcassets */,
 				D490942F2578EE54006D986A /* LaunchScreen.storyboard */,
 				D49094322578EE54006D986A /* Info.plist */,
 				D490942A2578EE54006D986A /* Weather_Logger.xcdatamodeld */,
-				D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */,
+				D490946B2579119B006D986A /* Support */,
 			);
 			path = "Weather-Logger";
 			sourceTree = "<group>";
@@ -183,8 +209,8 @@
 		D490945C25790336006D986A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				D4AD4766257E60C700F05258 /* WeatherDetails */,
 				D490945D2579033E006D986A /* SavedWeather */,
+				D4AD4766257E60C700F05258 /* WeatherDetails */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -199,13 +225,14 @@
 			path = SavedWeather;
 			sourceTree = "<group>";
 		};
-		D490946B2579119B006D986A /* Utility */ = {
+		D490946B2579119B006D986A /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				D490946C257911A8006D986A /* DAO.swift */,
 				D4AD4761257E2F8300F05258 /* UIViewControllerExtensions.swift */,
+				D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */,
 			);
-			path = Utility;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		D4909471257928B7006D986A /* Support */ = {
@@ -485,6 +512,7 @@
 				D490946425790380006D986A /* SavedWeatherVM.swift in Sources */,
 				D49094582578F77E006D986A /* CityWeatherDataResponse.swift in Sources */,
 				D49094242578EE53006D986A /* SceneDelegate.swift in Sources */,
+				D43FF9ED257FBBA30085E382 /* WeatherService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
