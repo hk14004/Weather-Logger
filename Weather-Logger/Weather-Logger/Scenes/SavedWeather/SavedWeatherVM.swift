@@ -158,14 +158,3 @@ struct CityWeatherData {
         self.weatherIconImage = weatherIconImage
     }
 }
-
-
-protocol LocationProviderProtocol {
-    func getCurrentLocation() -> Promise<CLLocation>
-}
-
-class CLService: LocationProviderProtocol {
-    func getCurrentLocation() -> Promise<CLLocation> {
-        return CLLocationManager.requestLocation().lastValue
-    }
-}
