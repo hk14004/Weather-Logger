@@ -80,18 +80,6 @@ class SavedWeatherVC: UIViewController {
             loadingSpinner.stopAnimating()
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showWeatherDetails" {
-            guard
-                let weatherDetailsVC = segue.destination as? WeatherDetailsVC,
-                let selectedWeather = savedWeatherVM.getSelectedWeather()
-            else {
-                return
-            }
-            weatherDetailsVC.weatherDetailsVM.display(weather: selectedWeather)
-        }
-    }
 }
 
 extension SavedWeatherVC: UITableViewDelegate {
@@ -134,9 +122,17 @@ extension SavedWeatherVC: UITableViewDataSource {
         return cell
     }
     
+    // Move to push vc instead of segue
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        savedWeatherVM.selectRow(at: indexPath)
-        performSegue(withIdentifier: "showWeatherDetails", sender: self)
+        if let weatherData = savedWeatherVM.getWeatherEntity(at: indexPath) {
+            guard let detailsVC =  UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WeatherDetailsVC") as? WeatherDetailsVC else {
+                return
+            }
+            
+            detailsVC.weatherDetailsVM.setup(weather: weatherData)
+            navigationController?.pushViewController(detailsVC, animated: true)
+        }
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
