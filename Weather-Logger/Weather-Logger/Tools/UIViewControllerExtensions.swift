@@ -15,4 +15,9 @@ extension UIViewController {
             self.present(alert, animated: true)
         }
     }
+    
+    static func instantiateWithMainStoryBoard() -> Self {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        return storyboard.instantiateViewController(withIdentifier: "\(self.self)") as! Self
+    }
 }

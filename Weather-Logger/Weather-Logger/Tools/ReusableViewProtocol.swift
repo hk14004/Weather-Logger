@@ -6,16 +6,16 @@
 
 import UIKit
 
-protocol ReusableView: class {}
+protocol ReusableViewProtocol: class {}
 
-extension ReusableView where Self: UIView {
+extension ReusableViewProtocol where Self: UIView {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
 }
 
-extension UITableViewCell: ReusableView { }
-extension UICollectionViewCell: ReusableView { }
+extension UITableViewCell: ReusableViewProtocol { }
+extension UICollectionViewCell: ReusableViewProtocol { }
 
 extension UITableView {
     func dequeueReusableCell<T: UITableViewCell>(forIndexPath indexPath: IndexPath) -> T {
