@@ -121,9 +121,9 @@ extension SavedWeatherVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         guard let weatherData = savedWeatherVM.getWeatherEntity(at: indexPath) else { return }
         showWeatherDetails(weatherData)
-        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
