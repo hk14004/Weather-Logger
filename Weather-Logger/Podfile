@@ -9,13 +9,4 @@ target 'Weather-Logger' do
   pod "PromiseKit", "~> 6.8"
   pod "PromiseKit/CoreLocation", "~> 6.0"
 
-  target 'Weather-LoggerTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'Weather-LoggerUITests' do
-    # Pods for testing
-  end
-
 end

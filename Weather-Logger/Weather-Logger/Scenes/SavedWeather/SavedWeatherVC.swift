@@ -19,6 +19,8 @@ class SavedWeatherVC: UIViewController {
     
     // MARK: Vars
     
+    weak var coordinator: MainCoordinator?
+    
     private lazy var loadingSpinner: UIActivityIndicatorView = {
         return UIActivityIndicatorView(style: .large)
     }()
@@ -80,6 +82,10 @@ class SavedWeatherVC: UIViewController {
             loadingSpinner.stopAnimating()
         }
     }
+    
+    private func showWeatherDetails(_ weather: CityWeatherEntity) {
+        coordinator?.show(weather: weather)
+    }
 }
 
 extension SavedWeatherVC: UITableViewDelegate {
@@ -89,7 +95,7 @@ extension SavedWeatherVC: UITableViewDelegate {
             savedWeatherVM.deleteWeatherData(at: indexPath)
             complete(true)
         }
-        deleteAction.backgroundColor = .red
+
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
         
@@ -107,31 +113,16 @@ extension SavedWeatherVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellId = "\(UITableViewCell.self)"
-        var cell: UITableViewCell
-        
-        if let dequeuedcell = tableView.dequeueReusableCell(withIdentifier: cellId) {
-            cell = dequeuedcell
-        } else {
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
-        }
-        
+        let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         let cellVM = savedWeatherVM.getWeatherCellVM(at: indexPath)
         cell.setup(with: cellVM)
 
         return cell
     }
     
-    // Move to push vc instead of segue
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let weatherData = savedWeatherVM.getWeatherEntity(at: indexPath) {
-            guard let detailsVC =  UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WeatherDetailsVC") as? WeatherDetailsVC else {
-                return
-            }
-            
-            detailsVC.weatherDetailsVM.setup(weather: weatherData)
-            navigationController?.pushViewController(detailsVC, animated: true)
-        }
+        guard let weatherData = savedWeatherVM.getWeatherEntity(at: indexPath) else { return }
+        showWeatherDetails(weatherData)
         tableView.deselectRow(at: indexPath, animated: false)
     }
 }
