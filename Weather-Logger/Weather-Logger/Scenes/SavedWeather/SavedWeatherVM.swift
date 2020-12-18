@@ -73,11 +73,13 @@ class SavedWeatherVM: NSObject {
     func logCurrentWeather() {
         loggingWeather = true
         
+        let queue = DispatchQueue.global(qos: .userInitiated)
+        
         firstly {
             locationProvider.getCurrentLocation()
-        }.then { (location) in
+        }.then(on: queue) { (location) in
             self.weatherProvider.getWeatherData(location: location)
-        }.then { weatherDataResponse -> Promise<(CityWeatherDataResponse, UIImage)> in
+        }.then(on: queue) { weatherDataResponse -> Promise<(CityWeatherDataResponse, UIImage)> in
             guard let iconName = weatherDataResponse.weather.first?.icon else  {
                 throw NSError() // Throw a real error
             }
