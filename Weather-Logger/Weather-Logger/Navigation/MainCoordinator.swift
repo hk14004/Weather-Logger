@@ -23,7 +23,7 @@ class MainCoordinator: CoordinatorProtocol {
     
     func show(weather: WeatherData) {
         let vc = WeatherDetailsVC.instantiateWithMainStoryBoard()
-        //vc.weatherDetailsVM.setup(weather: weather)
-        //navigationController.pushViewController(vc, animated: true)
+        vc.viewModel.prepare(for: weather)
+        navigationController.pushViewController(vc, animated: true)
     }
 }

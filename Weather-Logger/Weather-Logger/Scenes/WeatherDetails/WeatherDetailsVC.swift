@@ -19,14 +19,14 @@ class WeatherDetailsVC: UIViewController {
     
     @IBOutlet weak var forecastImageView: UIImageView!
     
-    private(set) var weatherDetailsVM = WeatherDetailsVM()
+    let viewModel = WeatherDetailsVM()
     
     override func viewDidLoad() {
-        weatherDetailsVM.delegate = self
-        cityLabel.text = weatherDetailsVM.city
-        forecastLabel.text = weatherDetailsVM.forecast
-        temperatureLabel.text = weatherDetailsVM.temperature
-        forecastImageView.image = weatherDetailsVM.icon
+        viewModel.delegate = self
+        cityLabel.text = viewModel.city
+        forecastLabel.text = viewModel.forecast
+        temperatureLabel.text = viewModel.temperature
+        forecastImageView.image = viewModel.icon
     }
 }
 

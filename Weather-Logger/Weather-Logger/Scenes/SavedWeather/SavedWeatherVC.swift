@@ -25,15 +25,15 @@ class SavedWeatherVC: UIViewController {
         return UIActivityIndicatorView(style: .large)
     }()
     
-    private let savedWeatherVM = SavedWeatherVM()
+    private let viewModel = SavedWeatherVM()
     
     // MARK: Functions
     
     override func viewDidLoad() {
         setupTableView()
         setupLoadingView()
-        savedWeatherVM.delegate = self
-        savedWeatherVM.loadData()
+        viewModel.delegate = self
+        viewModel.loadData()
     }
     
     private func setupTableView() {
@@ -53,7 +53,7 @@ class SavedWeatherVC: UIViewController {
     }
     
     @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
-        savedWeatherVM.onAddWeatherLog()
+        viewModel.onAddWeatherLog()
     }
     
     private func controls(enabled: Bool) {
@@ -61,7 +61,7 @@ class SavedWeatherVC: UIViewController {
     }
     
     private func setupLoadingView() {
-        if savedWeatherVM.loggingWeather {
+        if viewModel.loggingWeather {
             loadingSpinner.startAnimating()
             loadingSpinner.isHidden = false
         }
@@ -93,7 +93,7 @@ extension SavedWeatherVC: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive,
                                               title: NSLocalizedString("Delete", comment: "")) {[unowned self] _, _, complete in
-            savedWeatherVM.onDeleteWeather(at: indexPath)
+            viewModel.onDeleteWeather(at: indexPath)
             complete(true)
         }
 
@@ -110,12 +110,12 @@ extension SavedWeatherVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedWeatherVM.loadedWeatherLogs.count
+        return viewModel.loadedWeatherLogs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        let cellVM = savedWeatherVM.getWeatherCellVM(at: indexPath)
+        let cellVM = viewModel.getWeatherCellVM(at: indexPath)
         cell.setup(with: cellVM)
 
         return cell
@@ -123,7 +123,7 @@ extension SavedWeatherVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let weatherData = savedWeatherVM.getWeather(at: indexPath)
+        let weatherData = viewModel.getWeather(at: indexPath)
         showWeatherDetails(weatherData)
     }
 }
