@@ -37,4 +37,16 @@ extension WeatherData {
         self.iconUrl = iconUrl
         self.iconImage = iconImage
     }
+    
+    init?(response: CityWeatherDataResponse, forecastIcon: UIImage) {
+        guard let weatherInfo = response.weather.first else {
+            return nil
+        }
+        self.city = response.name
+        self.date = Date()
+        self.temp = response.main.temp
+        self.forecast = weatherInfo.main
+        self.iconUrl = weatherInfo.icon
+        self.iconImage = forecastIcon
+    }
 }

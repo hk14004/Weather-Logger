@@ -24,8 +24,8 @@ class EntityDAO<T: NSManagedObject> {
         }
     }
     
-    func save() {
-        try! persistentConatiner.viewContext.save()
+    func save() throws {
+        try persistentConatiner.viewContext.save()
     }
     
     func loadData(sectionNameKeyPath: String? = nil, cacheName: String? = nil, requestModifier: ((NSFetchRequest<T>) -> Void)? = nil ) throws -> [T] {
@@ -44,23 +44,23 @@ class EntityDAO<T: NSManagedObject> {
     }
     
     // TODO: Add try block
-    func delete(at: IndexPath) {
+    func delete(at: IndexPath) throws {
         guard let toBeDeleted = fetchedController?.fetchedObjects?[at.row] else {
             return
         }
         persistentConatiner.viewContext.delete(toBeDeleted)
-        save()
+        try save()
     }
     
-    func delete(_ toBeDeleted: [T]) {
+    func delete(_ toBeDeleted: [T]) throws {
         toBeDeleted.forEach {persistentConatiner.viewContext.delete($0)}
-        save()
+        try save()
     }
     
-    func createEntity(entityModifier: (T) -> Void) {
+    func createEntity(entityModifier: (T) -> Void) throws {
         let new = T(context: persistentConatiner.viewContext)
         entityModifier(new)
-        save()
+        try save()
     }
 }
 

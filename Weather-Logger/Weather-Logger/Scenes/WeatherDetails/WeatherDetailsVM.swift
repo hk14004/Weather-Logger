@@ -54,7 +54,7 @@ class WeatherDetailsVM {
             if weather.forecastIconImg != newIconData {
                 self.icon = image
                 weather.forecastIconImg = newIconData
-                self.weatherDao.save()
+                try self.weatherDao.save()
             }
         }.catch { (error) in
             print(error.localizedDescription)

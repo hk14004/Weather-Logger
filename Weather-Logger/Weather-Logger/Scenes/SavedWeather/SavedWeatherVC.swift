@@ -53,7 +53,7 @@ class SavedWeatherVC: UIViewController {
     }
     
     @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
-        savedWeatherVM.addWeatherLog()
+        savedWeatherVM.onAddWeatherLog()
     }
     
     private func controls(enabled: Bool) {
@@ -83,16 +83,17 @@ class SavedWeatherVC: UIViewController {
         }
     }
     
-    private func showWeatherDetails(_ weather: CityWeatherEntity) {
+    private func showWeatherDetails(_ weather: WeatherData) {
         coordinator?.show(weather: weather)
     }
 }
 
 extension SavedWeatherVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive,
                                               title: NSLocalizedString("Delete", comment: "")) {[unowned self] _, _, complete in
-            savedWeatherVM.deleteWeatherData(at: indexPath)
+            savedWeatherVM.onDeleteWeather(at: indexPath)
             complete(true)
         }
 
@@ -122,13 +123,12 @@ extension SavedWeatherVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        guard let weatherData = savedWeatherVM.getWeatherEntity(at: indexPath) else { return }
+        let weatherData = savedWeatherVM.getWeather(at: indexPath)
         showWeatherDetails(weatherData)
     }
 }
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
-    
     func reloadWeatherLogTable() {
         tableView.reloadData()
     }
@@ -142,11 +142,11 @@ extension SavedWeatherVC: SavedWeatherVMDelegate {
     }
     
     func rowAdded(at: IndexPath) {
-        tableView.insertRows(at: [at], with: .fade)
+        tableView.insertRows(at: [at], with: .automatic)
     }
     
     func rowDeleted(at: IndexPath) {
-        tableView.deleteRows(at: [at], with: .fade)
+        tableView.deleteRows(at: [at], with: .left)
     }
     
     func weatherListWillChange() {

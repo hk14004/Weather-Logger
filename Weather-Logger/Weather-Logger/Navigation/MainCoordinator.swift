@@ -21,9 +21,9 @@ class MainCoordinator: CoordinatorProtocol {
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func show(weather: CityWeatherEntity) {
+    func show(weather: WeatherData) {
         let vc = WeatherDetailsVC.instantiateWithMainStoryBoard()
-        vc.weatherDetailsVM.setup(weather: weather)
-        navigationController.pushViewController(vc, animated: true)
+        //vc.weatherDetailsVM.setup(weather: weather)
+        //navigationController.pushViewController(vc, animated: true)
     }
 }

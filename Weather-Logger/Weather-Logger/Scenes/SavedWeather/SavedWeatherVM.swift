@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import CoreData
-import CoreLocation
 import PromiseKit
 
 class SavedWeatherVM {
@@ -31,7 +29,6 @@ class SavedWeatherVM {
             if (oldValue.isEmpty != loadedWeatherLogs.isEmpty) {
                 delegate?.listVisibilityChanged(visible: !loadedWeatherLogs.isEmpty)
             }
-            
         }
     }
     
@@ -46,40 +43,56 @@ class SavedWeatherVM {
             self.loadedWeatherLogs = logs
             self.delegate?.reloadWeatherLogTable()
         }.catch { (error) in
-            print("Could not load from persistent store: \(error)")
+            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
+                                   message: NSLocalizedString("Could not load weather logs", comment: ""))
         }
+    }
+    
+    func getWeather(at: IndexPath) -> WeatherData {
+        return loadedWeatherLogs[at.row]
     }
     
     func getWeatherCellVM(at: IndexPath) -> SavedWeatherCellVM {
         return SavedWeatherCellVM(weatherModel: loadedWeatherLogs[at.row])
     }
     
-    func deleteWeatherData(at: IndexPath) {
-        //weatherDao.delete(at: at)
+    func onDeleteWeather(at: IndexPath) {
+        weatherRepository.delete(weatherLog: loadedWeatherLogs[at.row]).done {
+            self.deleteLogFromTable(at: at)
+        }.catch { (error) in
+            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
+                                   message: NSLocalizedString("Could not delete weather log", comment: ""))
+        }
+    }
+        
+    private func deleteLogFromTable(at: IndexPath) {
+        delegate?.weatherListWillChange()
+        loadedWeatherLogs.remove(at: at.row)
+        delegate?.rowDeleted(at: at)
+        delegate?.weatherListChanged()
     }
     
-    func getWeatherEntity(at: IndexPath) -> CityWeatherEntity? {
-        return nil
-//        guard at.row < loadedWeatherLogs.count else {
-//            return nil
-//        }
-//
-//        return loadedWeatherLogs[at.row]
+    private func insertLogIntoTable(log: WeatherData) {
+        delegate?.weatherListWillChange()
+        loadedWeatherLogs.append(log)
+        delegate?.rowAdded(at: IndexPath(row: loadedWeatherLogs.count - 1, section: 0))
+        delegate?.weatherListChanged()
     }
     
-    func addWeatherLog() {
+    func onAddWeatherLog() {
         loggingWeather = true
         
         firstly {
             locationProvider.getCurrentLocation()
-        }.then { (location) in
+        }.then(on: DispatchQueue.global(qos: .userInteractive)) { (location) in
             self.weatherRepository.createWeatherLog(for: location)
         }.done { (log) in
-            print("New log added", log)
+            self.insertLogIntoTable(log: log)
         }.ensure {
             self.loggingWeather = false
         }.catch { (error) in
-            print("Error")
+            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
+                                   message: NSLocalizedString("Could not add weather log", comment: ""))
         }
     }
 }
@@ -94,7 +107,3 @@ protocol SavedWeatherVMDelegate: class {
     func loggingStateChanged(_ isLogging: Bool)
     func reloadWeatherLogTable()
 }
-
-
-// CREATE NEW: return promise of new entry, append at the end.
-// DELETE: by some id only, delete from mvvm and storage
