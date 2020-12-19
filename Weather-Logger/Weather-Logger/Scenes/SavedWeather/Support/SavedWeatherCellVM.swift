@@ -28,16 +28,11 @@ class SavedWeatherCellVM {
     
     let city: String
     
-    init(weatherModel: CityWeatherEntity) {
+    init(weatherModel: WeatherData) {
         let tempMeasurement = Measurement(value: weatherModel.temp, unit: UnitTemperature.celsius)
         tempString = "\(tempMeasurement)"
-        if let date = weatherModel.date {
-            dateString = SavedWeatherCellVM.formatWeather(date: date)
-        } else {
-            dateString = ""
-        }
-        
-        city = weatherModel.city ?? ""
+        dateString = SavedWeatherCellVM.formatWeather(date: weatherModel.date)
+        city = weatherModel.city
     }
     
     private static func formatWeather(date: Date) -> String {

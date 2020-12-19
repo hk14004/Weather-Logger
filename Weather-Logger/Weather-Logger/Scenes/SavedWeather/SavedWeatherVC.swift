@@ -53,7 +53,7 @@ class SavedWeatherVC: UIViewController {
     }
     
     @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
-        savedWeatherVM.logCurrentWeather()
+        savedWeatherVM.addWeatherLog()
     }
     
     private func controls(enabled: Bool) {
@@ -109,7 +109,7 @@ extension SavedWeatherVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedWeatherVM.savedWeatherList.count
+        return savedWeatherVM.loadedWeatherLogs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,6 +128,11 @@ extension SavedWeatherVC: UITableViewDataSource {
 }
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
+    
+    func reloadWeatherLogTable() {
+        tableView.reloadData()
+    }
+    
     func loggingStateChanged(_ isLogging: Bool) {
         changeState(loading: isLogging)
     }

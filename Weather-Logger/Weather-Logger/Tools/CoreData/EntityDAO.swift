@@ -28,7 +28,7 @@ class EntityDAO<T: NSManagedObject> {
         try! persistentConatiner.viewContext.save()
     }
     
-    func loadData(sectionNameKeyPath: String? = nil, cacheName: String? = nil, requestModifier: ((NSFetchRequest<T>) -> Void)? = nil ) -> [T] {
+    func loadData(sectionNameKeyPath: String? = nil, cacheName: String? = nil, requestModifier: ((NSFetchRequest<T>) -> Void)? = nil ) throws -> [T] {
         // Default request
         let request: NSFetchRequest<T> = NSFetchRequest<T>(entityName: T.entity().name!)
         request.sortDescriptors = []
@@ -38,7 +38,7 @@ class EntityDAO<T: NSManagedObject> {
         
         // Perform fetch
         fetchedController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: persistentConatiner.viewContext, sectionNameKeyPath: sectionNameKeyPath, cacheName: cacheName)
-        try! fetchedController?.performFetch()
+        try fetchedController?.performFetch()
         
         return fetchedController?.fetchedObjects ?? []
     }
