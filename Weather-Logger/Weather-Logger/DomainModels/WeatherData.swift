@@ -8,19 +8,28 @@
 import UIKit
 import CoreData
 
-public struct WeatherData {
+public struct WeatherData: Hashable {
     let city: String
     let date: Date
     let temp: Double
     let forecast: String
     let iconUrl: String
     let iconImage: UIImage
+    let uuid: UUID
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+    public static func == (lhs: WeatherData, rhs: WeatherData) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
 }
 
 // TODO: Perhaps we can init somehow better
 extension WeatherData {
     init?(dataEntity: CityWeatherEntity) {
         guard
+            let uuid = dataEntity.uuid,
             let city = dataEntity.city,
             let date = dataEntity.date,
             let forecast = dataEntity.forecast,
@@ -31,6 +40,7 @@ extension WeatherData {
             return nil
         }
         
+        self.uuid = uuid
         self.city = city
         self.date = date
         self.temp = dataEntity.temp
@@ -43,6 +53,7 @@ extension WeatherData {
         guard let weatherInfo = response.weather.first else {
             return nil
         }
+        self.uuid = UUID()
         self.city = response.name
         self.date = Date()
         self.temp = response.main.temp

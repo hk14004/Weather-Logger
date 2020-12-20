@@ -98,7 +98,7 @@ class CoreDataWeatherCache: WeatherCacheProtocol {
         Promise {
             // TODO: Implement UUID
             let toBeDeleted = try weatherDao.loadData(sectionNameKeyPath: nil, cacheName: nil) { (reuqest) in
-                reuqest.predicate = NSPredicate(format: "date == %@", weather.date as NSDate)
+                reuqest.predicate = NSPredicate(format: "uuid == %@", weather.uuid as CVarArg )
             }
             try weatherDao.delete(toBeDeleted)
             $0.fulfill(())

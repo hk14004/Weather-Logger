@@ -9,6 +9,7 @@ import Foundation
 
 extension CityWeatherEntity {
     func setup(with weatherData: WeatherData) {
+        self.uuid = weatherData.uuid
         self.city = weatherData.city
         self.date = weatherData.date
         self.temp = weatherData.temp
