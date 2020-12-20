@@ -23,14 +23,8 @@ class WeatherDetailsVM {
             delegate?.forecastImageLoaded(image: icon)
         }
     }
-        
-    private let weatherProvider: WeatherProviderProtocol
     
     private let weatherDao = EntityDAO<CityWeatherEntity>()
-
-    init(weatherProvider: WeatherProviderProtocol = WeatherService()) {
-        self.weatherProvider = weatherProvider
-    }
     
     func prepare(for weather: WeatherData) {
         city = weather.city

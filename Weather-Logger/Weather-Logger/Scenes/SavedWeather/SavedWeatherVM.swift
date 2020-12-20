@@ -57,7 +57,7 @@ class SavedWeatherVM {
     }
     
     func onDeleteWeather(at: IndexPath) {
-        weatherRepository.delete(weatherLog: loadedWeatherLogs[at.row]).done {
+        weatherRepository.delete(weather: loadedWeatherLogs[at.row]).done {
             self.deleteLogFromTable(at: at)
         }.catch { (error) in
             self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),

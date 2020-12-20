@@ -8,7 +8,7 @@
 import Foundation
 import PromiseKit
 
-class WeatherService: WeatherProviderProtocol {
+class WeatherService: RemoteWeatherProviderProtocol {
     
     let API_KEY = "511bd6233d15a788fa5d8d6ddd83b7c8"
     
@@ -29,7 +29,7 @@ class WeatherService: WeatherProviderProtocol {
     }
 }
 
-protocol WeatherProviderProtocol {
+protocol RemoteWeatherProviderProtocol {
     func getWeatherData(location: CLLocation) -> Promise<CityWeatherDataResponse>
     func getForecastIcon(with name: String) -> Promise<UIImage>
 }
