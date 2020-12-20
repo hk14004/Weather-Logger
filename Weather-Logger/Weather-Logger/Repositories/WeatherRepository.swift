@@ -12,6 +12,7 @@ protocol WeatherRepositoryProtocol: class {
     func getWeatherLogList() -> Promise<[WeatherData]>
     func createWeatherLog(for location: CLLocation) -> Promise<WeatherData>
     func delete(weather: WeatherData) -> Promise<Void>
+    func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>>
 }
 
 class WeatherRepository: WeatherRepositoryProtocol {
@@ -28,6 +29,10 @@ class WeatherRepository: WeatherRepositoryProtocol {
     
     func getWeatherLogList() -> Promise<[WeatherData]> {
         localWeatherCache.getWeatherLogList()
+    }
+    
+    func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>> {
+        return localWeatherCache.getObservableWeatherLogList()
     }
     
     func createWeatherLog(for location: CLLocation) -> Promise<WeatherData> {

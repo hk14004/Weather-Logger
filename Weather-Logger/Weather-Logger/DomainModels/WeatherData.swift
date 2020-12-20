@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreData
 
-struct WeatherData {
+public struct WeatherData {
     let city: String
     let date: Date
     let temp: Double
@@ -48,5 +49,65 @@ extension WeatherData {
         self.forecast = weatherInfo.main
         self.iconUrl = weatherInfo.icon
         self.iconImage = forecastIcon
+    }
+}
+
+
+
+public protocol Entity {
+    associatedtype StoreType: Storable
+    
+    func toStorable(in context: NSManagedObjectContext) -> StoreType
+}
+
+public protocol Storable {
+    associatedtype EntityObject: Entity
+    
+    var model: EntityObject { get }
+}
+
+//3
+extension Storable where Self: NSManagedObject {
+    static func getOrCreateSingle(with uuid: String, from context: NSManagedObjectContext) -> Self {
+            let result = single(with: uuid, from: context) ?? insertNew(in: context)
+            result.setValue(uuid, forKey: "uuid")
+            return result
+        }
+        
+        static func single(with uuid: String, from context: NSManagedObjectContext) -> Self? {
+            return fetch(with: uuid, from: context)?.first
+        }
+        
+        static func insertNew(in context: NSManagedObjectContext) -> Self {
+            return Self(context:context)
+        }
+        
+        static func fetch(with uuid: String, from context: NSManagedObjectContext) -> [Self]? {
+            let entityName = String(describing: Self.self)
+            let fetchRequest = NSFetchRequest<Self>(entityName: entityName)
+            fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid)
+            fetchRequest.fetchLimit = 1
+
+            let result: [Self]? = try? context.fetch(fetchRequest)
+            
+            return result
+        }
+}
+
+//2
+extension CityWeatherEntity: Storable {
+    public var model: WeatherData
+    {
+        get {
+            return WeatherData(dataEntity: self)!
+        }
+    }
+}
+
+//1
+extension WeatherData: Entity {
+    public func toStorable(in context: NSManagedObjectContext) -> CityWeatherEntity {
+        
+        return CityWeatherEntity()
     }
 }

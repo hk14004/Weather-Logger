@@ -33,7 +33,7 @@ class SavedWeatherVC: UIViewController {
         setupTableView()
         setupLoadingView()
         viewModel.delegate = self
-        viewModel.loadData()
+        viewModel.loadAndObserveLogs()
     }
     
     private func setupTableView() {

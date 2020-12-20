@@ -24,6 +24,8 @@ class SavedWeatherVM {
         }
     }
     
+    private var loadRequest: ObservableFetchRequest<WeatherData>?
+    
     private(set) var loadedWeatherLogs: [WeatherData] = [] {
         didSet {
             if (oldValue.isEmpty != loadedWeatherLogs.isEmpty) {
@@ -48,6 +50,20 @@ class SavedWeatherVM {
         }
     }
     
+    func loadAndObserveLogs() {
+        weatherRepository.getObservableWeatherLogList().done { (observableRequest) in
+            self.loadRequest = observableRequest
+            self.loadedWeatherLogs = observableRequest.value ?? []
+            self.delegate?.reloadWeatherLogTable()
+            observableRequest.observe(with: self) { logs in
+                self.loadedWeatherLogs = logs ?? []
+                self.delegate?.reloadWeatherLogTable()
+            }
+        }.catch { (error) in
+            print("gg")
+        }
+    }
+    
     func getWeather(at: IndexPath) -> WeatherData {
         return loadedWeatherLogs[at.row]
     }
@@ -66,17 +82,17 @@ class SavedWeatherVM {
     }
         
     private func deleteLogFromTable(at: IndexPath) {
-        delegate?.weatherListWillChange()
-        loadedWeatherLogs.remove(at: at.row)
-        delegate?.rowDeleted(at: at)
-        delegate?.weatherListChanged()
+//        delegate?.weatherListWillChange()
+//        loadedWeatherLogs.remove(at: at.row)
+//        delegate?.rowDeleted(at: at)
+//        delegate?.weatherListChanged()
     }
     
     private func insertLogIntoTable(log: WeatherData) {
-        delegate?.weatherListWillChange()
-        loadedWeatherLogs.append(log)
-        delegate?.rowAdded(at: IndexPath(row: loadedWeatherLogs.count - 1, section: 0))
-        delegate?.weatherListChanged()
+//        delegate?.weatherListWillChange()
+//        loadedWeatherLogs.append(log)
+//        delegate?.rowAdded(at: IndexPath(row: loadedWeatherLogs.count - 1, section: 0))
+//        delegate?.weatherListChanged()
     }
     
     func onAddWeatherLog() {
