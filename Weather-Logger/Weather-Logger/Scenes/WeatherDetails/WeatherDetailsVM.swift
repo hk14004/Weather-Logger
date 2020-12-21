@@ -24,7 +24,7 @@ class WeatherDetailsVM {
         }
     }
     
-    private let weatherDao = EntityDAO<CityWeatherEntity>()
+    private let weatherDao = EntityDAO<CoreDataWeather>()
     
     func prepare(for weather: WeatherData) {
         city = weather.city

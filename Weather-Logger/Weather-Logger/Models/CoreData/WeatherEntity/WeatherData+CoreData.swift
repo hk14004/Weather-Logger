@@ -10,18 +10,18 @@ import UIKit
 // MARK: Conversion - CoreData stack
 
 extension WeatherData: DomainModelProtocol {
-    public typealias StoreType = CityWeatherEntity
+    public typealias StoreType = CoreDataWeather
 }
 
 extension WeatherData {
-    init?(storedEntity: StoreType) {
+    init?(coreDataEntity: StoreType) {
         guard
-            let uuid = storedEntity.uuid,
-            let city = storedEntity.city,
-            let date = storedEntity.date,
-            let forecast = storedEntity.forecast,
-            let iconUrl = storedEntity.icon,
-            let iconData = storedEntity.forecastIconImg,
+            let uuid = coreDataEntity.uuid,
+            let city = coreDataEntity.city,
+            let date = coreDataEntity.date,
+            let forecast = coreDataEntity.forecast,
+            let iconUrl = coreDataEntity.icon,
+            let iconData = coreDataEntity.forecastIconImg,
             let iconImage = UIImage(data: iconData)
         else {
             return nil
@@ -30,7 +30,7 @@ extension WeatherData {
         self.uuid = uuid
         self.city = city
         self.date = date
-        self.temp = storedEntity.temp
+        self.temp = coreDataEntity.temp
         self.forecast = forecast
         self.iconUrl = iconUrl
         self.iconImage = iconImage

@@ -7,13 +7,13 @@
 
 import Foundation
 
-extension CityWeatherEntity: DomainModelHolderProtocol {    
+extension CoreDataWeather: DomainModelHolderProtocol {    
     public func toDomainModel() -> WeatherData? {
-        return WeatherData(storedEntity: self)
+        return WeatherData(coreDataEntity: self)
     }
 }
 
-extension CityWeatherEntity {
+extension CoreDataWeather {
     func setup(with weatherData: WeatherData) {
         self.uuid = weatherData.uuid
         self.city = weatherData.city

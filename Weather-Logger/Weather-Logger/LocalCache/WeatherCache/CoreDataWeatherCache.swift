@@ -15,7 +15,7 @@ class CoreDataWeatherCache {
     
     // MARK: Vars
     
-    private let weatherDao = EntityDAO<CityWeatherEntity>()
+    private let weatherDao = EntityDAO<CoreDataWeather>()
 
 }
 
@@ -24,7 +24,7 @@ class CoreDataWeatherCache {
 extension CoreDataWeatherCache: WeatherCacheProtocol {
     func getWeatherList() -> Promise<ObservableFetchResult<WeatherData>> {
         Promise {
-            let request: NSFetchRequest<CityWeatherEntity> = CityWeatherEntity.fetchRequest()
+            let request: NSFetchRequest<CoreDataWeather> = CoreDataWeather.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
             let result = try CoreDataObservableResult<WeatherData>(with: request)
             $0.fulfill(result)
