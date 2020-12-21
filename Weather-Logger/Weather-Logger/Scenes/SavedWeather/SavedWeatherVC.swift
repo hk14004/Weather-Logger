@@ -27,6 +27,14 @@ class SavedWeatherVC: UIViewController {
     
     private let viewModel = SavedWeatherVM()
     
+    private lazy var source = DataSource<Int, WeatherData>(tableView: self.tableView) { (tableView,indexPath, item) -> UITableViewCell? in
+        let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        let cellVM = self.viewModel.getWeatherCellVM(at: indexPath)
+        cell.setup(with: cellVM)
+
+        return cell
+    }
+    
     // MARK: Functions
     
     override func viewDidLoad() {
@@ -38,7 +46,7 @@ class SavedWeatherVC: UIViewController {
     
     private func setupTableView() {
         tableView.delegate = self
-        tableView.dataSource = self
+//        tableView.dataSource = self
         tableView.tableFooterView = UIView()
     }
     
@@ -89,6 +97,29 @@ class SavedWeatherVC: UIViewController {
 }
 
 extension SavedWeatherVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, completionHandler) in
+//            guard let item = self.source.itemIdentifier(for: indexPath) else { return }
+////            self.container.viewContext.delete(item)
+////            self.updateSnapshot()
+//            completionHandler(true)
+//        }
+//        deleteAction.image = UIImage(systemName: "trash.fill")
+//
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        let weatherData = viewModel.getWeather(at: indexPath)
+        showWeatherDetails(weatherData)
+    }
+    
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive,
@@ -99,7 +130,7 @@ extension SavedWeatherVC: UITableViewDelegate {
 
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
-        
+
         return configuration
     }
 }
@@ -120,17 +151,14 @@ extension SavedWeatherVC: UITableViewDataSource {
 
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        let weatherData = viewModel.getWeather(at: indexPath)
-        showWeatherDetails(weatherData)
-    }
 }
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
     func reloadWeatherLogTable() {
-        tableView.reloadData()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, WeatherData>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(viewModel.loadedWeatherLogs)
+        source.apply(snapshot, animatingDifferences: source.snapshot().numberOfItems == 0 ? false : true)
     }
     
     func loggingStateChanged(_ isLogging: Bool) {
@@ -164,4 +192,12 @@ extension SavedWeatherVC: SavedWeatherVMDelegate {
             handleInvisibleTable()
         }
     }
+}
+
+class DataSource<T: Hashable,U: Hashable>: UITableViewDiffableDataSource<T, U> {
+    // ...
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    // ...
 }

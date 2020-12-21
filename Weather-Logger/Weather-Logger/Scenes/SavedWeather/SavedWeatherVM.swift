@@ -39,28 +39,17 @@ class SavedWeatherVM {
         self.locationProvider = locationProvider
         self.weatherRepository = weatherRepository
     }
-
-    func loadData() {
-        weatherRepository.getWeatherLogList().done { (logs) in
-            self.loadedWeatherLogs = logs
-            self.delegate?.reloadWeatherLogTable()
-        }.catch { (error) in
-            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
-                                   message: NSLocalizedString("Could not load weather logs", comment: ""))
-        }
-    }
     
     func loadAndObserveLogs() {
         weatherRepository.getObservableWeatherLogList().done { (observableRequest) in
             self.loadRequest = observableRequest
-            self.loadedWeatherLogs = observableRequest.value ?? []
-            self.delegate?.reloadWeatherLogTable()
             observableRequest.observe(with: self) { logs in
                 self.loadedWeatherLogs = logs ?? []
                 self.delegate?.reloadWeatherLogTable()
             }
         }.catch { (error) in
-            print("gg")
+            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
+                                   message: NSLocalizedString("Could not load weather logs", comment: ""))
         }
     }
     
@@ -73,37 +62,19 @@ class SavedWeatherVM {
     }
     
     func onDeleteWeather(at: IndexPath) {
-        weatherRepository.delete(weather: loadedWeatherLogs[at.row]).done {
-            self.deleteLogFromTable(at: at)
-        }.catch { (error) in
+        weatherRepository.delete(weather: loadedWeatherLogs[at.row]).catch { (error) in
             self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
                                    message: NSLocalizedString("Could not delete weather log", comment: ""))
         }
     }
         
-    private func deleteLogFromTable(at: IndexPath) {
-//        delegate?.weatherListWillChange()
-//        loadedWeatherLogs.remove(at: at.row)
-//        delegate?.rowDeleted(at: at)
-//        delegate?.weatherListChanged()
-    }
-    
-    private func insertLogIntoTable(log: WeatherData) {
-//        delegate?.weatherListWillChange()
-//        loadedWeatherLogs.append(log)
-//        delegate?.rowAdded(at: IndexPath(row: loadedWeatherLogs.count - 1, section: 0))
-//        delegate?.weatherListChanged()
-    }
-    
     func onAddWeatherLog() {
         loggingWeather = true
         
         firstly {
             locationProvider.getCurrentLocation()
         }.then(on: DispatchQueue.global(qos: .userInteractive)) { (location) in
-            self.weatherRepository.createWeatherLog(for: location)
-        }.done { (log) in
-            self.insertLogIntoTable(log: log)
+            self.weatherRepository.insertWeatherLog(for: location)
         }.ensure {
             self.loggingWeather = false
         }.catch { (error) in

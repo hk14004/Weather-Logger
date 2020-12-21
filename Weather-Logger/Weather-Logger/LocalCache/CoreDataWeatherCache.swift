@@ -9,11 +9,12 @@ import Foundation
 import PromiseKit
 import CoreData
 
-class CoreDataObservableRequest<RepositoryObject>: ObservableFetchRequest<RepositoryObject>, NSFetchedResultsControllerDelegate where RepositoryObject: Entity,
-                                                                                                                                        RepositoryObject.StoreType: NSManagedObject,
-                                                                                                                                        RepositoryObject.StoreType.EntityObject == RepositoryObject {
-    private var fetchedResultsController: NSFetchedResultsController<RepositoryObject.StoreType>?
+class CoreDataObservableRequest<RepositoryObject>: ObservableFetchRequest<RepositoryObject>,
+                                                   NSFetchedResultsControllerDelegate where RepositoryObject: Entity,
+                                                                                            RepositoryObject.StoreType: NSManagedObject,
+                                                                                            RepositoryObject.StoreType.EntityObject == RepositoryObject {
     
+    private var fetchedResultsController: NSFetchedResultsController<RepositoryObject.StoreType>?
     
     override var value: [RepositoryObject]? {
         get {

@@ -10,7 +10,7 @@ import PromiseKit
 
 protocol WeatherRepositoryProtocol: class {
     func getWeatherLogList() -> Promise<[WeatherData]>
-    func createWeatherLog(for location: CLLocation) -> Promise<WeatherData>
+    func insertWeatherLog(for location: CLLocation) -> Promise<WeatherData>
     func delete(weather: WeatherData) -> Promise<Void>
     func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>>
 }
@@ -35,7 +35,7 @@ class WeatherRepository: WeatherRepositoryProtocol {
         return localWeatherCache.getObservableWeatherLogList()
     }
     
-    func createWeatherLog(for location: CLLocation) -> Promise<WeatherData> {
+    func insertWeatherLog(for location: CLLocation) -> Promise<WeatherData> {
         let queue = DispatchQueue.global(qos: .userInitiated)
         return Promise { seal in
             firstly {
