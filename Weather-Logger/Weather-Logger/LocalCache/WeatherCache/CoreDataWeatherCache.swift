@@ -25,7 +25,7 @@ extension CoreDataWeatherCache: WeatherCacheProtocol {
     func getWeatherList() -> Promise<ObservableFetchResult<WeatherData>> {
         Promise {
             let request: NSFetchRequest<CoreDataWeather> = CoreDataWeather.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             let result = try CoreDataObservableResult<WeatherData>(with: request)
             $0.fulfill(result)
         }
