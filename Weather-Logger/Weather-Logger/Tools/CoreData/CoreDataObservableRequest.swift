@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class CoreDataObservableRequest<RepositoryObject>: ObservableFetchRequest<RepositoryObject>,
+class CoreDataObservableResult<RepositoryObject>: ObservableFetchResult<RepositoryObject>,
                                                    NSFetchedResultsControllerDelegate where RepositoryObject: Entity,
                                                                                             RepositoryObject.StoreType: NSManagedObject,
                                                                                             RepositoryObject.StoreType.EntityObject == RepositoryObject {

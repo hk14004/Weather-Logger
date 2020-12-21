@@ -24,7 +24,7 @@ class SavedWeatherVM {
         }
     }
     
-    private var loadRequest: ObservableFetchRequest<WeatherData>?
+    private var loadRequest: ObservableFetchResult<WeatherData>?
     
     private(set) var loadedWeatherLogs: [WeatherData] = [] {
         didSet {

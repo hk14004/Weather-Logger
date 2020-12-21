@@ -11,7 +11,7 @@ import PromiseKit
 // Repository uses this protocol to fetch local storage data
 
 protocol WeatherCacheProtocol {
-    func getWeatherList() -> Promise<ObservableFetchRequest<WeatherData>>
+    func getWeatherList() -> Promise<ObservableFetchResult<WeatherData>>
     func cache(weather: WeatherData) -> Promise<Void>
     func delete(weather: WeatherData) -> Promise<Void>
 }

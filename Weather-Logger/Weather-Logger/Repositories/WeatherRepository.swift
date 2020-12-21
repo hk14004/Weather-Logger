@@ -13,7 +13,7 @@ import PromiseKit
 protocol WeatherRepositoryProtocol {
     func insertWeatherLog(for location: CLLocation) -> Promise<WeatherData>
     func delete(weather: WeatherData) -> Promise<Void>
-    func getWeatherList() -> Promise<ObservableFetchRequest<WeatherData>>
+    func getWeatherList() -> Promise<ObservableFetchResult<WeatherData>>
 }
 
 class WeatherRepository {
@@ -36,7 +36,7 @@ class WeatherRepository {
 // MARK: WeatherRepositoryProtocol
 
 extension WeatherRepository: WeatherRepositoryProtocol {
-    func getWeatherList() -> Promise<ObservableFetchRequest<WeatherData>> {
+    func getWeatherList() -> Promise<ObservableFetchResult<WeatherData>> {
         return localWeatherCache.getWeatherList()
     }
     
