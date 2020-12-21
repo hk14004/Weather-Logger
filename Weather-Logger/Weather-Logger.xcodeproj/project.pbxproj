@@ -27,7 +27,7 @@
 		D490942C2578EE54006D986A /* Weather_Logger.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D490942A2578EE54006D986A /* Weather_Logger.xcdatamodeld */; };
 		D490942E2578EE54006D986A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D490942D2578EE54006D986A /* Assets.xcassets */; };
 		D49094312578EE54006D986A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D490942F2578EE54006D986A /* LaunchScreen.storyboard */; };
-		D49094582578F77E006D986A /* CityWeatherDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094572578F77E006D986A /* CityWeatherDataResponse.swift */; };
+		D49094582578F77E006D986A /* WeatherJSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094572578F77E006D986A /* WeatherJSONResponse.swift */; };
 		D490945F25790374006D986A /* SavedWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490945E25790374006D986A /* SavedWeatherVC.swift */; };
 		D490946425790380006D986A /* SavedWeatherVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490946325790380006D986A /* SavedWeatherVM.swift */; };
 		D490946D257911A8006D986A /* EntityDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490946C257911A8006D986A /* EntityDAO.swift */; };
@@ -64,7 +64,7 @@
 		D490942D2578EE54006D986A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D49094302578EE54006D986A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D49094322578EE54006D986A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D49094572578F77E006D986A /* CityWeatherDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherDataResponse.swift; sourceTree = "<group>"; };
+		D49094572578F77E006D986A /* WeatherJSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSONResponse.swift; sourceTree = "<group>"; };
 		D490945E25790374006D986A /* SavedWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWeatherVC.swift; sourceTree = "<group>"; };
 		D490946325790380006D986A /* SavedWeatherVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedWeatherVM.swift; sourceTree = "<group>"; };
 		D490946C257911A8006D986A /* EntityDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDAO.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		D43FF9F8257FBCC30085E382 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				D4F4FACC2590615900806696 /* CityWeatherResponse */,
+				D4F4FACC2590615900806696 /* WeatherResponse */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -314,13 +314,13 @@
 			path = WeatherEntity;
 			sourceTree = "<group>";
 		};
-		D4F4FACC2590615900806696 /* CityWeatherResponse */ = {
+		D4F4FACC2590615900806696 /* WeatherResponse */ = {
 			isa = PBXGroup;
 			children = (
-				D49094572578F77E006D986A /* CityWeatherDataResponse.swift */,
+				D49094572578F77E006D986A /* WeatherJSONResponse.swift */,
 				D498E4BB2590624D006FB4DC /* WeatherData+WeatherJSON.swift */,
 			);
-			path = CityWeatherResponse;
+			path = WeatherResponse;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,7 +459,7 @@
 				D498E4BC2590624D006FB4DC /* WeatherData+WeatherJSON.swift in Sources */,
 				D43FFA0A257FBE5E0085E382 /* CLService.swift in Sources */,
 				D452D6DC258D7F1C004691F2 /* WeatherRepository.swift in Sources */,
-				D49094582578F77E006D986A /* CityWeatherDataResponse.swift in Sources */,
+				D49094582578F77E006D986A /* WeatherJSONResponse.swift in Sources */,
 				D49094242578EE53006D986A /* SceneDelegate.swift in Sources */,
 				D439F05625903AC200F4FBFA /* CityWeatherEntity.swift in Sources */,
 				D452D6D5258D6790004691F2 /* WeatherData.swift in Sources */,

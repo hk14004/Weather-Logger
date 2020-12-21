@@ -10,7 +10,7 @@ import UIKit
 // MARK: Conversion - Network stack
 
 extension WeatherData {
-    init?(response: CityWeatherDataResponse, forecastIcon: UIImage) {
+    init?(response: WeatherJSONResponse, forecastIcon: UIImage) {
         guard let weatherInfo = response.weather.first else {
             return nil
         }

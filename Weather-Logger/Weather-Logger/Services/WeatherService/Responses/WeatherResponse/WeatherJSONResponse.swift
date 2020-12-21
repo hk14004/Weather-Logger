@@ -1,5 +1,5 @@
 //
-//  CityWeatherData.swift
+//  WeatherJSONResponse.swift
 //  Weather-Logger
 //
 //  Created by Hardijs on 03/12/2020.
@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import PromiseKit
 
-struct CityWeatherDataResponse: Codable {
+struct WeatherJSONResponse: Codable {
     let timezone: Int
     let id: Int
     let name: String

@@ -45,7 +45,7 @@ extension WeatherRepository: WeatherRepositoryProtocol {
         return Promise { seal in
             firstly {
                 remoteWeatherProvider.getWeatherData(location: location)
-            }.then(on: queue) { (weatherResponse) -> Promise<(CityWeatherDataResponse, UIImage)> in
+            }.then(on: queue) { (weatherResponse) -> Promise<(WeatherJSONResponse, UIImage)> in
                 guard let iconUrl = weatherResponse.weather.first?.icon else {
                     throw NSError(domain: "API did not return icon url", code: 0, userInfo: nil)
                 }
