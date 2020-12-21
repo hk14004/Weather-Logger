@@ -36,21 +36,7 @@ class CoreDataObservableResult<DomainType>: ObservableFetchResult<DomainType>,
         try frc?.performFetch()
     }
     
-    // MARK: ObservableFetchResult
-    
-    override func observe(with owner: AnyObject, _ onChanged: @escaping ([DomainType]?) -> (Void)) {
-        observers.append(ObserverContainer(owner, onChanged))
-        onChanged(value)
-    }
-
-    override func removeObserver(_ owner: AnyObject) {
-        observers.removeAll { $0.owner === owner }
-    }
-
-    private func notifyObservers() {
-        observers.removeAll { $0.owner == nil }
-        observers.forEach { $0.onChanged(value) }
-    }
+    // MARK: Functions
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         notifyObservers()

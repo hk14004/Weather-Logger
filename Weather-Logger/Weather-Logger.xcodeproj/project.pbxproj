@@ -33,6 +33,9 @@
 		D490946D257911A8006D986A /* EntityDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D490946C257911A8006D986A /* EntityDAO.swift */; };
 		D4909473257928CC006D986A /* SavedWeatherCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4909472257928CC006D986A /* SavedWeatherCellVM.swift */; };
 		D498E4BC2590624D006FB4DC /* WeatherData+WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D498E4BB2590624D006FB4DC /* WeatherData+WeatherJSON.swift */; };
+		D498E4D025906DCF006FB4DC /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D498E4CF25906DCF006FB4DC /* Cache.swift */; };
+		D498E4D325906FDB006FB4DC /* NSCacheWeatherCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D498E4D225906FDB006FB4DC /* NSCacheWeatherCache.swift */; };
+		D498E4D625907163006FB4DC /* NSCacheObservableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D498E4D525907163006FB4DC /* NSCacheObservableResult.swift */; };
 		D4AD4762257E2F8300F05258 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AD4761257E2F8300F05258 /* UIViewControllerExtensions.swift */; };
 		D4AD4768257E610E00F05258 /* WeatherDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AD4767257E610E00F05258 /* WeatherDetailsVC.swift */; };
 		D4AD4770257E611C00F05258 /* WeatherDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AD476F257E611C00F05258 /* WeatherDetailsVM.swift */; };
@@ -70,6 +73,9 @@
 		D490946C257911A8006D986A /* EntityDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDAO.swift; sourceTree = "<group>"; };
 		D4909472257928CC006D986A /* SavedWeatherCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWeatherCellVM.swift; sourceTree = "<group>"; };
 		D498E4BB2590624D006FB4DC /* WeatherData+WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherData+WeatherJSON.swift"; sourceTree = "<group>"; };
+		D498E4CF25906DCF006FB4DC /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		D498E4D225906FDB006FB4DC /* NSCacheWeatherCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheWeatherCache.swift; sourceTree = "<group>"; };
+		D498E4D525907163006FB4DC /* NSCacheObservableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheObservableResult.swift; sourceTree = "<group>"; };
 		D4AD4761257E2F8300F05258 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D4AD4767257E610E00F05258 /* WeatherDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsVC.swift; sourceTree = "<group>"; };
 		D4AD476F257E611C00F05258 /* WeatherDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsVM.swift; sourceTree = "<group>"; };
@@ -120,6 +126,7 @@
 			children = (
 				D42470002590303800DAE72F /* WeatherCacheProtocol.swift */,
 				D43D375B258ED006005FCACD /* CoreDataWeatherCache.swift */,
+				D498E4D225906FDB006FB4DC /* NSCacheWeatherCache.swift */,
 			);
 			path = WeatherCache;
 			sourceTree = "<group>";
@@ -278,7 +285,7 @@
 		D490946B2579119B006D986A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				D44BC571258CF4CE0029CBF5 /* CoreData */,
+				D498E4CD25906DA0006FB4DC /* Storage */,
 				D4AD4761257E2F8300F05258 /* UIViewControllerExtensions.swift */,
 				D45E6862258EF9F200A2EAE0 /* DataBinding.swift */,
 				D40B5425258CE36000A909A9 /* ReusableViewProtocol.swift */,
@@ -294,6 +301,24 @@
 				D4909472257928CC006D986A /* SavedWeatherCellVM.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		D498E4CD25906DA0006FB4DC /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				D498E4CE25906DB6006FB4DC /* Cache */,
+				D44BC571258CF4CE0029CBF5 /* CoreData */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		D498E4CE25906DB6006FB4DC /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				D498E4CF25906DCF006FB4DC /* Cache.swift */,
+				D498E4D525907163006FB4DC /* NSCacheObservableResult.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		D4AD4766257E60C700F05258 /* WeatherDetails */ = {
@@ -438,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D40B52C3258CDDE800A909A9 /* MainCoordinator.swift in Sources */,
+				D498E4D325906FDB006FB4DC /* NSCacheWeatherCache.swift in Sources */,
 				D490946D257911A8006D986A /* EntityDAO.swift in Sources */,
 				D4909473257928CC006D986A /* SavedWeatherCellVM.swift in Sources */,
 				D4F4FAC9259060C500806696 /* WeatherData+CoreData.swift in Sources */,
@@ -445,12 +471,14 @@
 				D4AD4762257E2F8300F05258 /* UIViewControllerExtensions.swift in Sources */,
 				D43D375C258ED006005FCACD /* CoreDataWeatherCache.swift in Sources */,
 				D47809AA257A5A0900052D6B /* UITableViewCellExtensions.swift in Sources */,
+				D498E4D625907163006FB4DC /* NSCacheObservableResult.swift in Sources */,
 				D49094222578EE53006D986A /* AppDelegate.swift in Sources */,
 				D44DD2A72590519B00FA90EA /* DomainModelAbstraction.swift in Sources */,
 				D4AD4768257E610E00F05258 /* WeatherDetailsVC.swift in Sources */,
 				D4AD4770257E611C00F05258 /* WeatherDetailsVM.swift in Sources */,
 				D42470012590303800DAE72F /* WeatherCacheProtocol.swift in Sources */,
 				D4246FFD25902E6A00DAE72F /* CoreDataObservableResult.swift in Sources */,
+				D498E4D025906DCF006FB4DC /* Cache.swift in Sources */,
 				D40B5426258CE36000A909A9 /* ReusableViewProtocol.swift in Sources */,
 				D490942C2578EE54006D986A /* Weather_Logger.xcdatamodeld in Sources */,
 				D45E6863258EF9F200A2EAE0 /* DataBinding.swift in Sources */,

@@ -46,11 +46,21 @@ class ObserverContainer<T> {
 }
 
 class ObservableFetchResult<T>: NSObject {
-    var observers: [ObserverContainer<[T]>] = []
+    private var observers: [ObserverContainer<[T]>] = []
     
     private(set) var value: [T]? = []
     
-    func observe(with owner: AnyObject, _ onChanged: @escaping ([T]?) -> (Void)) {}
+    func observe(with owner: AnyObject, _ onChanged: @escaping ([T]?) -> (Void)) {
+        observers.append(ObserverContainer(owner, onChanged))
+        onChanged(value)
+    }
     
-    func removeObserver(_ owner: AnyObject) {}
+    func removeObserver(_ owner: AnyObject) {
+        observers.removeAll { $0.owner === owner }
+    }
+    
+    internal func notifyObservers() {
+        observers.removeAll { $0.owner == nil }
+        observers.forEach { $0.onChanged(value) }
+    }
 }
