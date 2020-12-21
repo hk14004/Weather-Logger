@@ -10,12 +10,12 @@ import CoreData
 
 class CoreDataObservableResult<DomainType>: ObservableFetchResult<DomainType>,
                                             NSFetchedResultsControllerDelegate where DomainType: DomainModelProtocol,
-                                                                                     DomainType.StoreType: NSManagedObject,
-                                                                                     DomainType.StoreType.DomainModelType == DomainType {
+                                                                                     DomainType.CoreDataStoreType: NSManagedObject,
+                                                                                     DomainType.CoreDataStoreType.DomainModelType == DomainType {
     
     // MARK: Vars
     
-    private var frc: NSFetchedResultsController<DomainType.StoreType>?
+    private var frc: NSFetchedResultsController<DomainType.CoreDataStoreType>?
     
     override var value: [DomainType]? {
         get {
@@ -25,7 +25,7 @@ class CoreDataObservableResult<DomainType>: ObservableFetchResult<DomainType>,
     
     // MARK: Init
     
-    required init(with request: NSFetchRequest<DomainType.StoreType>) throws {
+    required init(with request: NSFetchRequest<DomainType.CoreDataStoreType>) throws {
         super.init()
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         frc = NSFetchedResultsController(fetchRequest: request,

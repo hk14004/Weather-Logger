@@ -27,7 +27,7 @@ class WeatherRepository {
     // MARK: Init
     
     init(weatherProvider: RemoteWeatherProviderProtocol = WeatherService(),
-         localWeatherCache: WeatherCacheProtocol = CoreDataWeatherCache()) {
+         localWeatherCache: WeatherCacheProtocol = RealmWeatherCache.shared) {
         self.remoteWeatherProvider = weatherProvider
         self.localWeatherCache = localWeatherCache
     }

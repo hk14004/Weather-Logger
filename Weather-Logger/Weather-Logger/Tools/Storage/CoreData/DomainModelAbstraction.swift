@@ -10,7 +10,8 @@ import Foundation
 // All domain models should implement this protocol
 
 protocol DomainModelProtocol {
-    associatedtype StoreType: DomainModelHolderProtocol
+    associatedtype CoreDataStoreType: DomainModelHolderProtocol
+    associatedtype RealmStoreType: DomainModelHolderProtocol
 }
 
 // All persistent entities should implement this protocol

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B6762E0298C4FA2B8686BE9A /* Pods_Weather_Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FBB36660A74270B4165413 /* Pods_Weather_Logger.framework */; };
+		687CFEBBED955CFA586A3AA3 /* Pods_Weather_Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0625ACA40700477A6B02B4 /* Pods_Weather_Logger.framework */; };
 		D40B52C3258CDDE800A909A9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40B52C2258CDDE800A909A9 /* MainCoordinator.swift */; };
 		D40B5426258CE36000A909A9 /* ReusableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40B5425258CE36000A909A9 /* ReusableViewProtocol.swift */; };
 		D4246FFD25902E6A00DAE72F /* CoreDataObservableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4246FFC25902E6A00DAE72F /* CoreDataObservableResult.swift */; };
@@ -20,6 +20,10 @@
 		D452D6D5258D6790004691F2 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D452D6D4258D6790004691F2 /* WeatherData.swift */; };
 		D452D6DC258D7F1C004691F2 /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D452D6DB258D7F1C004691F2 /* WeatherRepository.swift */; };
 		D45E6863258EF9F200A2EAE0 /* DataBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45E6862258EF9F200A2EAE0 /* DataBinding.swift */; };
+		D474135925912CB800D6AC55 /* RealmWeatherCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474135825912CB800D6AC55 /* RealmWeatherCache.swift */; };
+		D47413682591326200D6AC55 /* RealmWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47413672591326200D6AC55 /* RealmWeatherData.swift */; };
+		D474136C259135C700D6AC55 /* WeatherData+Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474136B259135C700D6AC55 /* WeatherData+Realm.swift */; };
+		D4741370259140F400D6AC55 /* RealmObservableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474136F259140F400D6AC55 /* RealmObservableResult.swift */; };
 		D47809AA257A5A0900052D6B /* UITableViewCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */; };
 		D49094222578EE53006D986A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094212578EE53006D986A /* AppDelegate.swift */; };
 		D49094242578EE53006D986A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49094232578EE53006D986A /* SceneDelegate.swift */; };
@@ -44,8 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B738D5E22D31E90C2A373C93 /* Pods-Weather-Logger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather-Logger.release.xcconfig"; path = "Target Support Files/Pods-Weather-Logger/Pods-Weather-Logger.release.xcconfig"; sourceTree = "<group>"; };
-		C6FBB36660A74270B4165413 /* Pods_Weather_Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_Logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		024F4AA4BC0A616ABF8A7850 /* Pods-Weather-Logger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather-Logger.debug.xcconfig"; path = "Target Support Files/Pods-Weather-Logger/Pods-Weather-Logger.debug.xcconfig"; sourceTree = "<group>"; };
+		6A0625ACA40700477A6B02B4 /* Pods_Weather_Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_Logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D40B52C2258CDDE800A909A9 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		D40B5425258CE36000A909A9 /* ReusableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewProtocol.swift; sourceTree = "<group>"; };
 		D4246FFC25902E6A00DAE72F /* CoreDataObservableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataObservableResult.swift; sourceTree = "<group>"; };
@@ -58,6 +62,10 @@
 		D452D6D4258D6790004691F2 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		D452D6DB258D7F1C004691F2 /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
 		D45E6862258EF9F200A2EAE0 /* DataBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBinding.swift; sourceTree = "<group>"; };
+		D474135825912CB800D6AC55 /* RealmWeatherCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmWeatherCache.swift; sourceTree = "<group>"; };
+		D47413672591326200D6AC55 /* RealmWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmWeatherData.swift; sourceTree = "<group>"; };
+		D474136B259135C700D6AC55 /* WeatherData+Realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherData+Realm.swift"; sourceTree = "<group>"; };
+		D474136F259140F400D6AC55 /* RealmObservableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObservableResult.swift; sourceTree = "<group>"; };
 		D47809A9257A5A0900052D6B /* UITableViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtensions.swift; sourceTree = "<group>"; };
 		D490941E2578EE53006D986A /* Weather-Logger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-Logger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49094212578EE53006D986A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,7 +89,7 @@
 		D4AD476F257E611C00F05258 /* WeatherDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsVM.swift; sourceTree = "<group>"; };
 		D4C3A9D2258CD05F002E80A9 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		D4F4FAC8259060C500806696 /* WeatherData+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherData+CoreData.swift"; sourceTree = "<group>"; };
-		FD9C4CA6F20BFC0541816296 /* Pods-Weather-Logger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather-Logger.debug.xcconfig"; path = "Target Support Files/Pods-Weather-Logger/Pods-Weather-Logger.debug.xcconfig"; sourceTree = "<group>"; };
+		F159E601630F1109115CAFCA /* Pods-Weather-Logger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather-Logger.release.xcconfig"; path = "Target Support Files/Pods-Weather-Logger/Pods-Weather-Logger.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,17 +97,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6762E0298C4FA2B8686BE9A /* Pods_Weather_Logger.framework in Frameworks */,
+				687CFEBBED955CFA586A3AA3 /* Pods_Weather_Logger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8B35BB359A09C9CD177C6B70 /* Frameworks */ = {
+		7F782DEAD93CE42C1963ED40 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C6FBB36660A74270B4165413 /* Pods_Weather_Logger.framework */,
+				6A0625ACA40700477A6B02B4 /* Pods_Weather_Logger.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,8 +115,8 @@
 		D34D4C2AE5D438F8F6466256 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FD9C4CA6F20BFC0541816296 /* Pods-Weather-Logger.debug.xcconfig */,
-				B738D5E22D31E90C2A373C93 /* Pods-Weather-Logger.release.xcconfig */,
+				024F4AA4BC0A616ABF8A7850 /* Pods-Weather-Logger.debug.xcconfig */,
+				F159E601630F1109115CAFCA /* Pods-Weather-Logger.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -127,6 +135,7 @@
 				D42470002590303800DAE72F /* WeatherCacheProtocol.swift */,
 				D43D375B258ED006005FCACD /* CoreDataWeatherCache.swift */,
 				D498E4D225906FDB006FB4DC /* NSCacheWeatherCache.swift */,
+				D474135825912CB800D6AC55 /* RealmWeatherCache.swift */,
 			);
 			path = WeatherCache;
 			sourceTree = "<group>";
@@ -210,6 +219,7 @@
 		D452D6D3258D675D004691F2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D4741365259131E700D6AC55 /* Realm */,
 				D439F05425903A9700F4FBFA /* CoreData */,
 				D439F05325903A8000F4FBFA /* Domain */,
 			);
@@ -224,13 +234,38 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		D4741365259131E700D6AC55 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				D4741366259131F200D6AC55 /* WeatherData */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		D4741366259131F200D6AC55 /* WeatherData */ = {
+			isa = PBXGroup;
+			children = (
+				D47413672591326200D6AC55 /* RealmWeatherData.swift */,
+				D474136B259135C700D6AC55 /* WeatherData+Realm.swift */,
+			);
+			path = WeatherData;
+			sourceTree = "<group>";
+		};
+		D474136E259140DD00D6AC55 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				D474136F259140F400D6AC55 /* RealmObservableResult.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		D49094152578EE53006D986A = {
 			isa = PBXGroup;
 			children = (
 				D49094202578EE53006D986A /* Weather-Logger */,
 				D490941F2578EE53006D986A /* Products */,
 				D34D4C2AE5D438F8F6466256 /* Pods */,
-				8B35BB359A09C9CD177C6B70 /* Frameworks */,
+				7F782DEAD93CE42C1963ED40 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -306,6 +341,7 @@
 		D498E4CD25906DA0006FB4DC /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				D474136E259140DD00D6AC55 /* Realm */,
 				D498E4CE25906DB6006FB4DC /* Cache */,
 				D44BC571258CF4CE0029CBF5 /* CoreData */,
 			);
@@ -355,11 +391,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D490944B2578EE55006D986A /* Build configuration list for PBXNativeTarget "Weather-Logger" */;
 			buildPhases = (
-				B4588C80102F4A7678549C8C /* [CP] Check Pods Manifest.lock */,
+				8C0A3E2803DE5D386A9AA694 /* [CP] Check Pods Manifest.lock */,
 				D490941A2578EE53006D986A /* Sources */,
 				D490941B2578EE53006D986A /* Frameworks */,
 				D490941C2578EE53006D986A /* Resources */,
-				81538D66552AA52C305B6A5E /* [CP] Embed Pods Frameworks */,
+				365BB084CDEEF1B4DAAA3B09 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -416,7 +452,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		81538D66552AA52C305B6A5E /* [CP] Embed Pods Frameworks */ = {
+		365BB084CDEEF1B4DAAA3B09 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -433,7 +469,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Weather-Logger/Pods-Weather-Logger-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B4588C80102F4A7678549C8C /* [CP] Check Pods Manifest.lock */ = {
+		8C0A3E2803DE5D386A9AA694 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -463,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D40B52C3258CDDE800A909A9 /* MainCoordinator.swift in Sources */,
+				D474136C259135C700D6AC55 /* WeatherData+Realm.swift in Sources */,
 				D498E4D325906FDB006FB4DC /* NSCacheWeatherCache.swift in Sources */,
 				D490946D257911A8006D986A /* EntityDAO.swift in Sources */,
 				D4909473257928CC006D986A /* SavedWeatherCellVM.swift in Sources */,
@@ -472,8 +509,10 @@
 				D43D375C258ED006005FCACD /* CoreDataWeatherCache.swift in Sources */,
 				D47809AA257A5A0900052D6B /* UITableViewCellExtensions.swift in Sources */,
 				D498E4D625907163006FB4DC /* NSCacheObservableResult.swift in Sources */,
+				D4741370259140F400D6AC55 /* RealmObservableResult.swift in Sources */,
 				D49094222578EE53006D986A /* AppDelegate.swift in Sources */,
 				D44DD2A72590519B00FA90EA /* DomainModelAbstraction.swift in Sources */,
+				D47413682591326200D6AC55 /* RealmWeatherData.swift in Sources */,
 				D4AD4768257E610E00F05258 /* WeatherDetailsVC.swift in Sources */,
 				D4AD4770257E611C00F05258 /* WeatherDetailsVM.swift in Sources */,
 				D42470012590303800DAE72F /* WeatherCacheProtocol.swift in Sources */,
@@ -484,6 +523,7 @@
 				D45E6863258EF9F200A2EAE0 /* DataBinding.swift in Sources */,
 				D490945F25790374006D986A /* SavedWeatherVC.swift in Sources */,
 				D490946425790380006D986A /* SavedWeatherVM.swift in Sources */,
+				D474135925912CB800D6AC55 /* RealmWeatherCache.swift in Sources */,
 				D498E4BC2590624D006FB4DC /* WeatherData+WeatherJSON.swift in Sources */,
 				D43FFA0A257FBE5E0085E382 /* CLService.swift in Sources */,
 				D452D6DC258D7F1C004691F2 /* WeatherRepository.swift in Sources */,
@@ -635,7 +675,7 @@
 		};
 		D490944C2578EE55006D986A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD9C4CA6F20BFC0541816296 /* Pods-Weather-Logger.debug.xcconfig */;
+			baseConfigurationReference = 024F4AA4BC0A616ABF8A7850 /* Pods-Weather-Logger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -655,7 +695,7 @@
 		};
 		D490944D2578EE55006D986A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B738D5E22D31E90C2A373C93 /* Pods-Weather-Logger.release.xcconfig */;
+			baseConfigurationReference = F159E601630F1109115CAFCA /* Pods-Weather-Logger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -10,11 +10,12 @@ import UIKit
 // MARK: Conversion - CoreData stack
 
 extension WeatherData: DomainModelProtocol {
-    public typealias StoreType = CoreDataWeather
+    public typealias CoreDataStoreType = CoreDataWeather
+    public typealias RealmStoreType = RealmWeatherData
 }
 
 extension WeatherData {
-    init?(coreDataEntity: StoreType) {
+    init?(coreDataEntity: CoreDataStoreType) {
         guard
             let uuid = coreDataEntity.uuid,
             let city = coreDataEntity.city,

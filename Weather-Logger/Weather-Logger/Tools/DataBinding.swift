@@ -46,7 +46,8 @@ class ObserverContainer<T> {
 }
 
 class ObservableFetchResult<T>: NSObject {
-    private var observers: [ObserverContainer<[T]>] = []
+    
+    private(set) var observers: [ObserverContainer<[T]>] = []
     
     private(set) var value: [T]? = []
     
