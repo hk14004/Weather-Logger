@@ -24,7 +24,11 @@ class SavedWeatherVM {
         }
     }
     
-    private var loadRequest: ObservableFetchResult<WeatherData>?
+    private var loadRequest: ObservableFetchResult<WeatherData>? {
+        didSet {
+            oldValue?.removeObserver(self)
+        }
+    }
     
     private(set) var loadedWeatherLogs: [WeatherData] = [] {
         didSet {
