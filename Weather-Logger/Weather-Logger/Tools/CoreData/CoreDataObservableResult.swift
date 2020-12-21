@@ -9,9 +9,9 @@ import UIKit
 import CoreData
 
 class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject>,
-                                              NSFetchedResultsControllerDelegate where DomainObject: Entity,
+                                              NSFetchedResultsControllerDelegate where DomainObject: DomainModelProtocol,
                                                                                        DomainObject.StoreType: NSManagedObject,
-                                                                                       DomainObject.StoreType.EntityObject == DomainObject {
+                                                                                       DomainObject.StoreType.DomainType == DomainObject {
     
     // MARK: Vars
     
@@ -19,7 +19,7 @@ class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject
     
     override var value: [DomainObject]? {
         get {
-            return frc?.fetchedObjects?.compactMap { $0.model }
+            return frc?.fetchedObjects?.compactMap { $0.toDomainModel() }
         }
     }
     
@@ -60,22 +60,22 @@ class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject
 
 // MARK: For CoreData - Refactor
 
-extension WeatherData: Entity {
+extension WeatherData: DomainModelProtocol {
     public func toStorable(in context: NSManagedObjectContext) -> CityWeatherEntity {
         
         return CityWeatherEntity()
     }
 }
 
-public protocol Entity {
-    associatedtype StoreType: Storable
+public protocol DomainModelProtocol {
+    associatedtype StoreType: DomainHolderProtocol
     
     func toStorable(in context: NSManagedObjectContext) -> StoreType
 }
 
-public protocol Storable {
-    associatedtype EntityObject: Entity
+public protocol DomainHolderProtocol {
+    associatedtype DomainType: DomainModelProtocol
     
-    var model: EntityObject { get }
+    func toDomainModel() -> DomainType
 }
 

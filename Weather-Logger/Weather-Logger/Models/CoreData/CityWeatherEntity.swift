@@ -7,10 +7,8 @@
 
 import Foundation
 
-extension CityWeatherEntity: Storable {
-    public var model: WeatherData {
-        get {
-            return WeatherData(dataEntity: self)!
-        }
+extension CityWeatherEntity: DomainHolderProtocol {    
+    public func toDomainModel() -> WeatherData {
+        return WeatherData(dataEntity: self)!
     }
 }
