@@ -41,7 +41,7 @@ class SavedWeatherVM {
     }
     
     func loadAndObserveLogs() {
-        weatherRepository.getObservableWeatherLogList().done { (observableRequest) in
+        weatherRepository.getWeatherList().done { (observableRequest) in
             self.loadRequest = observableRequest
             observableRequest.observe(with: self) { logs in
                 self.loadedWeatherLogs = logs ?? []

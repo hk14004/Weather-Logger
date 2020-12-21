@@ -8,31 +8,36 @@
 import Foundation
 import PromiseKit
 
-protocol WeatherRepositoryProtocol: class {
-    func getWeatherLogList() -> Promise<[WeatherData]>
+// ViewModels use this protocol to manipulate with data
+
+protocol WeatherRepositoryProtocol {
     func insertWeatherLog(for location: CLLocation) -> Promise<WeatherData>
     func delete(weather: WeatherData) -> Promise<Void>
-    func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>>
+    func getWeatherList() -> Promise<ObservableFetchRequest<WeatherData>>
 }
 
-class WeatherRepository: WeatherRepositoryProtocol {
+class WeatherRepository {
+    
+    // MARK: Vars
     
     private let remoteWeatherProvider: RemoteWeatherProviderProtocol
     
     private let localWeatherCache: WeatherCacheProtocol
+    
+    // MARK: Init
     
     init(weatherProvider: RemoteWeatherProviderProtocol = WeatherService(),
          localWeatherCache: WeatherCacheProtocol = CoreDataWeatherCache()) {
         self.remoteWeatherProvider = weatherProvider
         self.localWeatherCache = localWeatherCache
     }
-    
-    func getWeatherLogList() -> Promise<[WeatherData]> {
-        localWeatherCache.getWeatherLogList()
-    }
-    
-    func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>> {
-        return localWeatherCache.getObservableWeatherLogList()
+}
+
+// MARK: WeatherRepositoryProtocol
+
+extension WeatherRepository: WeatherRepositoryProtocol {
+    func getWeatherList() -> Promise<ObservableFetchRequest<WeatherData>> {
+        return localWeatherCache.getWeatherList()
     }
     
     func insertWeatherLog(for location: CLLocation) -> Promise<WeatherData> {

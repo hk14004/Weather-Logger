@@ -8,6 +8,11 @@
 import Foundation
 import PromiseKit
 
+protocol RemoteWeatherProviderProtocol {
+    func getWeatherData(location: CLLocation) -> Promise<CityWeatherDataResponse>
+    func getForecastIcon(with name: String) -> Promise<UIImage>
+}
+
 class WeatherService: RemoteWeatherProviderProtocol {
     
     let API_KEY = "511bd6233d15a788fa5d8d6ddd83b7c8"
@@ -23,13 +28,6 @@ class WeatherService: RemoteWeatherProviderProtocol {
     func getForecastIcon(with name: String) -> Promise<UIImage> {
         let url = URL(string: "http://openweathermap.org/img/wn/\(name)@2x.png")!
         
-        return URLSession.shared.dataTask(.promise, with: url).compactMap {
-            return UIImage(data: $0.data)
-        }
+        return URLSession.shared.dataTask(.promise, with: url).compactMap { UIImage(data: $0.data) }
     }
-}
-
-protocol RemoteWeatherProviderProtocol {
-    func getWeatherData(location: CLLocation) -> Promise<CityWeatherDataResponse>
-    func getForecastIcon(with name: String) -> Promise<UIImage>
 }

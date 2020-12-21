@@ -62,5 +62,3 @@ struct CityWeatherDataResponse: Codable {
         let icon: String
     }
 }
-
-

@@ -43,7 +43,6 @@ class EntityDAO<T: NSManagedObject> {
         return fetchedController?.fetchedObjects ?? []
     }
     
-    // TODO: Add try block
     func delete(at: IndexPath) throws {
         guard let toBeDeleted = fetchedController?.fetchedObjects?[at.row] else {
             return

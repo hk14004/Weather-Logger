@@ -1,5 +1,5 @@
 //
-//  ReusableView.swift
+//  ReusableViewProtocol.swift
 //
 //  Created by Hardijs on 18/12/2020.
 //

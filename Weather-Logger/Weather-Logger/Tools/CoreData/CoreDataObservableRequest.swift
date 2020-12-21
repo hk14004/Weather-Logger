@@ -1,12 +1,11 @@
 //
-//  CoreDataWeatherCache.swift
+//  CoreDataObservableRequest.swift
 //  Weather-Logger
 //
-//  Created by Hardijs on 20/12/2020.
+//  Created by Hardijs on 21/12/2020.
 //
 
-import Foundation
-import PromiseKit
+import UIKit
 import CoreData
 
 class CoreDataObservableRequest<RepositoryObject>: ObservableFetchRequest<RepositoryObject>,
@@ -49,60 +48,27 @@ class CoreDataObservableRequest<RepositoryObject>: ObservableFetchRequest<Reposi
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         notifyObservers()
     }
-
 }
 
 
-protocol WeatherCacheProtocol {
-    func getWeatherLogList() -> Promise<[WeatherData]>
-    func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>>
-    func cache(weather: WeatherData) -> Promise<Void>
-    func delete(weather: WeatherData) -> Promise<Void>
+// MARK: For CoreData - Refactor
+
+extension WeatherData: Entity {
+    public func toStorable(in context: NSManagedObjectContext) -> CityWeatherEntity {
+        
+        return CityWeatherEntity()
+    }
 }
 
-class CoreDataWeatherCache: WeatherCacheProtocol {
+public protocol Entity {
+    associatedtype StoreType: Storable
     
-    func getObservableWeatherLogList() -> Promise<ObservableFetchRequest<WeatherData>> {
-        Promise {
-            let request: NSFetchRequest<CityWeatherEntity> = CityWeatherEntity.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
-            let result = try CoreDataObservableRequest<WeatherData>(with: request)
-            $0.fulfill(result)
-        }
-    }
-    
-    
-
-    
-
-    private let weatherDao = EntityDAO<CityWeatherEntity>()
-    
-    func getWeatherLogList() -> Promise<[WeatherData]> {
-        Promise {
-            let loadedWeather = try weatherDao.loadData(sectionNameKeyPath: nil, cacheName: nil, requestModifier: { (request) in
-                request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
-            })
-            $0.fulfill(loadedWeather.compactMap { WeatherData(dataEntity: $0) })
-        }
-    }
-    
-    func cache(weather: WeatherData) -> Promise<Void> {
-        Promise {
-            try weatherDao.createEntity { (newEntity) in
-                newEntity.setup(with: weather)
-            }
-            $0.fulfill(())
-        }
-    }
-    
-    func delete(weather: WeatherData) -> Promise<Void> {
-        Promise {
-            // TODO: Implement UUID
-            let toBeDeleted = try weatherDao.loadData(sectionNameKeyPath: nil, cacheName: nil) { (reuqest) in
-                reuqest.predicate = NSPredicate(format: "uuid == %@", weather.uuid as CVarArg )
-            }
-            try weatherDao.delete(toBeDeleted)
-            $0.fulfill(())
-        }
-    }
+    func toStorable(in context: NSManagedObjectContext) -> StoreType
 }
+
+public protocol Storable {
+    associatedtype EntityObject: Entity
+    
+    var model: EntityObject { get }
+}
+
