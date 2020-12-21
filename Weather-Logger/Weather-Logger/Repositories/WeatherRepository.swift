@@ -27,7 +27,7 @@ class WeatherRepository {
     // MARK: Init
     
     init(weatherProvider: RemoteWeatherProviderProtocol = WeatherService(),
-         localWeatherCache: WeatherCacheProtocol = NSCacheWeatherCache.shared) {
+         localWeatherCache: WeatherCacheProtocol = CoreDataWeatherCache()) {
         self.remoteWeatherProvider = weatherProvider
         self.localWeatherCache = localWeatherCache
     }
