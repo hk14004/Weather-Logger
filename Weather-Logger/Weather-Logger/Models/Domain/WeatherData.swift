@@ -11,13 +11,13 @@ import CoreData
 // Domain level data object used throughout app to abstract data sources
 
 public struct WeatherData {
+    let uuid: UUID
     let city: String
     let date: Date
     let temp: Double
     let forecast: String
     let iconUrl: String
     let iconImage: UIImage
-    let uuid: UUID
 }
 
 // MARK: Hashable - To be diff-able data source
@@ -32,17 +32,21 @@ extension WeatherData: Hashable {
     }
 }
 
-// MARK: Conversion inits - CoreData stack
+// MARK: Conversion - CoreData stack
+
+extension WeatherData: DomainModelProtocol {
+    public typealias StoreType = CityWeatherEntity
+}
 
 extension WeatherData {
-    init?(dataEntity: CityWeatherEntity) {
+    init?(storedEntity: StoreType) {
         guard
-            let uuid = dataEntity.uuid,
-            let city = dataEntity.city,
-            let date = dataEntity.date,
-            let forecast = dataEntity.forecast,
-            let iconUrl = dataEntity.icon,
-            let iconData = dataEntity.forecastIconImg,
+            let uuid = storedEntity.uuid,
+            let city = storedEntity.city,
+            let date = storedEntity.date,
+            let forecast = storedEntity.forecast,
+            let iconUrl = storedEntity.icon,
+            let iconData = storedEntity.forecastIconImg,
             let iconImage = UIImage(data: iconData)
         else {
             return nil
@@ -51,14 +55,16 @@ extension WeatherData {
         self.uuid = uuid
         self.city = city
         self.date = date
-        self.temp = dataEntity.temp
+        self.temp = storedEntity.temp
         self.forecast = forecast
         self.iconUrl = iconUrl
         self.iconImage = iconImage
     }
 }
 
-// MARK: Conversion inits - Network stack
+
+
+// MARK: Conversion - Network stack
 
 extension WeatherData {
     init?(response: CityWeatherDataResponse, forecastIcon: UIImage) {

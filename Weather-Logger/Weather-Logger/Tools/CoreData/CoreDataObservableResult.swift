@@ -8,16 +8,16 @@
 import UIKit
 import CoreData
 
-class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject>,
-                                              NSFetchedResultsControllerDelegate where DomainObject: DomainModelProtocol,
-                                                                                       DomainObject.StoreType: NSManagedObject,
-                                                                                       DomainObject.StoreType.DomainType == DomainObject {
+class CoreDataObservableResult<DomainType>: ObservableFetchResult<DomainType>,
+                                            NSFetchedResultsControllerDelegate where DomainType: DomainModelProtocol,
+                                                                                     DomainType.StoreType: NSManagedObject,
+                                                                                     DomainType.StoreType.DomainModelType == DomainType {
     
     // MARK: Vars
     
-    private var frc: NSFetchedResultsController<DomainObject.StoreType>?
+    private var frc: NSFetchedResultsController<DomainType.StoreType>?
     
-    override var value: [DomainObject]? {
+    override var value: [DomainType]? {
         get {
             return frc?.fetchedObjects?.compactMap { $0.toDomainModel() }
         }
@@ -25,7 +25,7 @@ class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject
     
     // MARK: Init
     
-    required init(with request: NSFetchRequest<DomainObject.StoreType>) throws {
+    required init(with request: NSFetchRequest<DomainType.StoreType>) throws {
         super.init()
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         frc = NSFetchedResultsController(fetchRequest: request,
@@ -36,9 +36,9 @@ class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject
         try frc?.performFetch()
     }
     
-    // MARK: ObservableFetchResult functions
+    // MARK: ObservableFetchResult
     
-    override func observe(with owner: AnyObject, _ onChanged: @escaping ([DomainObject]?) -> (Void)) {
+    override func observe(with owner: AnyObject, _ onChanged: @escaping ([DomainType]?) -> (Void)) {
         observers.append(ObserverContainer(owner, onChanged))
         onChanged(value)
     }
@@ -56,26 +56,3 @@ class CoreDataObservableResult<DomainObject>: ObservableFetchResult<DomainObject
         notifyObservers()
     }
 }
-
-
-// MARK: For CoreData - Refactor
-
-extension WeatherData: DomainModelProtocol {
-    public func toStorable(in context: NSManagedObjectContext) -> CityWeatherEntity {
-        
-        return CityWeatherEntity()
-    }
-}
-
-public protocol DomainModelProtocol {
-    associatedtype StoreType: DomainHolderProtocol
-    
-    func toStorable(in context: NSManagedObjectContext) -> StoreType
-}
-
-public protocol DomainHolderProtocol {
-    associatedtype DomainType: DomainModelProtocol
-    
-    func toDomainModel() -> DomainType
-}
-
