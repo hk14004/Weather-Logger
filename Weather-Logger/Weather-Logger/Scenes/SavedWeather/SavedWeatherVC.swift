@@ -38,6 +38,7 @@ class SavedWeatherVC: UIViewController {
     // MARK: Functions
     
     override func viewDidLoad() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
         setupLoadingView()
         viewModel.delegate = self
@@ -46,7 +47,6 @@ class SavedWeatherVC: UIViewController {
     
     private func setupTableView() {
         tableView.delegate = self
-//        tableView.dataSource = self
         tableView.tableFooterView = UIView()
     }
     
