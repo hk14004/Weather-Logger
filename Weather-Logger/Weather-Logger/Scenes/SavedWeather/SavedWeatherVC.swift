@@ -102,18 +102,6 @@ extension SavedWeatherVC: UITableViewDelegate {
         return .delete
     }
     
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, completionHandler) in
-//            guard let item = self.source.itemIdentifier(for: indexPath) else { return }
-////            self.container.viewContext.delete(item)
-////            self.updateSnapshot()
-//            completionHandler(true)
-//        }
-//        deleteAction.image = UIImage(systemName: "trash.fill")
-//
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let weatherData = viewModel.getWeather(at: indexPath)
