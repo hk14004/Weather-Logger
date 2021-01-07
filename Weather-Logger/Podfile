@@ -10,5 +10,6 @@ target 'Weather-Logger' do
   pod "PromiseKit", "~> 6.8"
   pod "PromiseKit/CoreLocation", "~> 6.0"
   pod 'RealmSwift'
-
+  pod 'RxSwift', '6.0.0'
+  pod 'RxCocoa', '6.0.0'
 end
