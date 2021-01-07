@@ -7,34 +7,28 @@
 
 import Foundation
 import PromiseKit
+import RxSwift
+import RxCocoa
 
 class SavedWeatherVM {
     
-    weak var delegate: SavedWeatherVMDelegate?
+    // MARK: RX
+    
+    let weatherList: BehaviorRelay<[WeatherData]> = BehaviorRelay(value: [])
+    
+    let isLogging: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    
+    let errorTitleAndMessage: BehaviorRelay<(String, String)> = BehaviorRelay(value: ("", ""))
+    
+    // MARK: Non RX
     
     private let locationProvider: LocationProviderProtocol
     
     private let weatherRepository: WeatherRepositoryProtocol
     
-    private(set) var loggingWeather: Bool = false {
-        didSet {
-            if (oldValue != loggingWeather) {
-                delegate?.loggingStateChanged(loggingWeather)
-            }
-        }
-    }
-    
     private var loadRequest: ObservableFetchResult<WeatherData>? {
         didSet {
             oldValue?.removeObserver(self)
-        }
-    }
-    
-    private(set) var loadedWeatherLogs: [WeatherData] = [] {
-        didSet {
-            if (oldValue.isEmpty != loadedWeatherLogs.isEmpty) {
-                delegate?.listVisibilityChanged(visible: !loadedWeatherLogs.isEmpty)
-            }
         }
     }
     
@@ -47,54 +41,42 @@ class SavedWeatherVM {
     func loadAndObserveLogs() {
         weatherRepository.getWeatherList().done { (observableRequest) in
             self.loadRequest = observableRequest
-            observableRequest.observe(with: self) { logs in
-                self.loadedWeatherLogs = logs ?? []
-                self.delegate?.reloadWeatherLogTable()
+            observableRequest.observe(with: self) { [weak self] logs in
+                self?.weatherList.accept(logs ?? [])
             }
         }.catch { (error) in
-            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
-                                   message: NSLocalizedString("Could not load weather logs", comment: ""))
+            self.errorTitleAndMessage.accept((NSLocalizedString("Error", comment: ""),
+                                   message: NSLocalizedString("Could not load weather logs", comment: "")))
         }
     }
     
     func getWeather(at: IndexPath) -> WeatherData {
-        return loadedWeatherLogs[at.row]
+        return weatherList.value[at.row]
     }
     
     func getWeatherCellVM(at: IndexPath) -> SavedWeatherCellVM {
-        return SavedWeatherCellVM(weatherModel: loadedWeatherLogs[at.row])
+        return SavedWeatherCellVM(weatherModel: weatherList.value[at.row])
     }
     
     func onDeleteWeather(at: IndexPath) {
-        weatherRepository.delete(weather: loadedWeatherLogs[at.row]).catch { (error) in
-            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
-                                   message: NSLocalizedString("Could not delete weather log", comment: ""))
+        weatherRepository.delete(weather: weatherList.value[at.row]).catch { (error) in
+            self.errorTitleAndMessage.accept((NSLocalizedString("Error", comment: ""),
+                                   message: NSLocalizedString("Could not delete weather log", comment: "")))
         }
     }
         
     func onAddWeatherLog() {
-        loggingWeather = true
+        isLogging.accept(true)
         
         firstly {
             locationProvider.getCurrentLocation()
         }.then(on: DispatchQueue.global(qos: .userInteractive)) { (location) in
             self.weatherRepository.insertWeatherLog(for: location)
         }.ensure {
-            self.loggingWeather = false
+            self.isLogging.accept(false)
         }.catch { (error) in
-            self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
-                                   message: NSLocalizedString("Could not add weather log", comment: ""))
+            self.errorTitleAndMessage.accept((NSLocalizedString("Error", comment: ""),
+                                              NSLocalizedString("Could not add weather log", comment: "")))
         }
     }
-}
-
-protocol SavedWeatherVMDelegate: class {
-    func weatherListWillChange()
-    func weatherListChanged()
-    func rowAdded(at: IndexPath)
-    func rowDeleted(at: IndexPath)
-    func listVisibilityChanged(visible: Bool)
-    func onError(title: String, message: String)
-    func loggingStateChanged(_ isLogging: Bool)
-    func reloadWeatherLogTable()
 }

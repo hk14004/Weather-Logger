@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SavedWeatherVC: UIViewController {
+    
+    // MARK: RX
+    
+    let disposeBag = DisposeBag()
     
     // MARK: IBOutlets
     
@@ -27,27 +33,83 @@ class SavedWeatherVC: UIViewController {
     
     private let viewModel = SavedWeatherVM()
     
-    private lazy var source = DataSource<Int, WeatherData>(tableView: self.tableView) { (tableView,indexPath, item) -> UITableViewCell? in
-        let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        let cellVM = self.viewModel.getWeatherCellVM(at: indexPath)
-        cell.setup(with: cellVM)
-
-        return cell
-    }
-    
     // MARK: Functions
     
     override func viewDidLoad() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+        setupNavigationBar()
         setupTableView()
         setupLoadingView()
-        viewModel.delegate = self
+        observeViewModel()
         viewModel.loadAndObserveLogs()
+    }
+    
+    // MARK: Actions
+    
+    @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
+        viewModel.onAddWeatherLog()
+    }
+    
+    // MARK: Setup
+    
+    private func observeViewModel() {
+        viewModel.weatherList.bind(to: tableView.rx.items(cellIdentifier: UITableViewCell.reuseIdentifier)) { row, _, cell in
+            let cellVM = self.viewModel.getWeatherCellVM(at: IndexPath(row: row, section: 0))
+            cell.setup(with: cellVM)
+         }.disposed(by: disposeBag)
+     
+        viewModel.weatherList.map{$0.isEmpty}.distinctUntilChanged().subscribe { [weak self] isListEmpty in
+            self?.changeUIState(emptyTable: isListEmpty)
+        }.disposed(by: disposeBag)
+        
+        viewModel.isLogging.distinctUntilChanged().subscribe { [weak self] isLogging in
+            self?.changeUIState(loading: isLogging)
+        }.disposed(by: disposeBag)
+        
+        viewModel.errorTitleAndMessage.subscribe { [weak self] (title, message) in
+            guard !title.isEmpty && !message.isEmpty else { return }
+            self?.displayConfirmationAlert(title: title, message: message)
+        }.disposed(by: disposeBag)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func setupTableView() {
         tableView.delegate = self
         tableView.tableFooterView = UIView()
+    }
+    
+    private func setupLoadingView() {
+        view.addSubview(loadingSpinner)
+        loadingSpinner.hidesWhenStopped = true
+        loadingSpinner.translatesAutoresizingMaskIntoConstraints = false
+        loadingSpinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingSpinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    // MARK: UI changes
+    
+    private func changeUIState(loading: Bool) {
+        if loading {
+            controls(enabled: false)
+            loadingSpinner.startAnimating()
+        } else {
+            controls(enabled: true)
+            loadingSpinner.stopAnimating()
+        }
+    }
+    
+    private func changeUIState(emptyTable: Bool) {
+        if emptyTable {
+            handleInvisibleTable()
+        } else {
+            handleVisibleTable()
+        }
+    }
+    
+    private func controls(enabled: Bool) {
+        saveLogButton.isEnabled = enabled
     }
     
     private func handleInvisibleTable() {
@@ -60,36 +122,7 @@ class SavedWeatherVC: UIViewController {
         emptyTableLabel.isHidden = true
     }
     
-    @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
-        viewModel.onAddWeatherLog()
-    }
-    
-    private func controls(enabled: Bool) {
-        saveLogButton.isEnabled = enabled
-    }
-    
-    private func setupLoadingView() {
-        if viewModel.loggingWeather {
-            loadingSpinner.startAnimating()
-            loadingSpinner.isHidden = false
-        }
-        view.addSubview(loadingSpinner)
-        loadingSpinner.translatesAutoresizingMaskIntoConstraints = false
-        loadingSpinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingSpinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    }
-    
-    private func changeState(loading: Bool) {
-        if loading {
-            controls(enabled: false)
-            loadingSpinner.isHidden = false
-            loadingSpinner.startAnimating()
-        } else {
-            controls(enabled: true)
-            loadingSpinner.isHidden = true
-            loadingSpinner.stopAnimating()
-        }
-    }
+    // MARK: Navigation
     
     private func showWeatherDetails(_ weather: WeatherData) {
         coordinator?.show(weather: weather)
@@ -121,71 +154,4 @@ extension SavedWeatherVC: UITableViewDelegate {
 
         return configuration
     }
-}
-
-extension SavedWeatherVC: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.loadedWeatherLogs.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        let cellVM = viewModel.getWeatherCellVM(at: indexPath)
-        cell.setup(with: cellVM)
-
-        return cell
-    }
-}
-
-extension SavedWeatherVC: SavedWeatherVMDelegate {
-    func reloadWeatherLogTable() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, WeatherData>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.loadedWeatherLogs)
-        source.apply(snapshot, animatingDifferences: source.snapshot().numberOfItems == 0 ? false : true)
-    }
-    
-    func loggingStateChanged(_ isLogging: Bool) {
-        changeState(loading: isLogging)
-    }
-    
-    func onError(title: String, message: String) {
-        displayConfirmationAlert(title: title, message: message)
-    }
-    
-    func rowAdded(at: IndexPath) {
-        tableView.insertRows(at: [at], with: .automatic)
-    }
-    
-    func rowDeleted(at: IndexPath) {
-        tableView.deleteRows(at: [at], with: .left)
-    }
-    
-    func weatherListWillChange() {
-        tableView.beginUpdates()
-    }
-    
-    func weatherListChanged() {
-        tableView.endUpdates()
-    }
-    
-    func listVisibilityChanged(visible: Bool) {
-        if visible {
-            handleVisibleTable()
-        } else {
-            handleInvisibleTable()
-        }
-    }
-}
-
-class DataSource<T: Hashable,U: Hashable>: UITableViewDiffableDataSource<T, U> {
-    // ...
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    // ...
 }
