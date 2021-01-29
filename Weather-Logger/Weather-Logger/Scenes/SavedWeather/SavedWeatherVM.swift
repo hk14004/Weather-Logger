@@ -10,6 +10,8 @@ import PromiseKit
 
 class SavedWeatherVM {
     
+    // MARK: Vars
+    
     weak var delegate: SavedWeatherVMDelegate?
     
     private let locationProvider: LocationProviderProtocol
@@ -38,18 +40,22 @@ class SavedWeatherVM {
         }
     }
     
+    // MARK: Init
+    
     init(locationProvider: LocationProviderProtocol = CLService(),
          weatherRepository: WeatherRepositoryProtocol = WeatherRepository()) {
         self.locationProvider = locationProvider
         self.weatherRepository = weatherRepository
     }
     
+    // MARK: Methods
+    
     func loadAndObserveLogs() {
         weatherRepository.getWeatherList().done { (observableRequest) in
             self.loadRequest = observableRequest
-            observableRequest.observe(with: self) { logs in
-                self.loadedWeatherLogs = logs ?? []
-                self.delegate?.reloadWeatherLogTable()
+            observableRequest.observe(with: self) { [weak self] logs in
+                self?.loadedWeatherLogs = logs ?? []
+                self?.delegate?.reloadWeatherLogTable()
             }
         }.catch { (error) in
             self.delegate?.onError(title: NSLocalizedString("Error", comment: ""),
@@ -57,10 +63,12 @@ class SavedWeatherVM {
         }
     }
     
+    /// Should always be called by cellForRowAt, otherwise return optional
     func getWeather(at: IndexPath) -> WeatherData {
         return loadedWeatherLogs[at.row]
     }
     
+    /// Should always be called by cellForRowAt, otherwise return optional
     func getWeatherCellVM(at: IndexPath) -> SavedWeatherCellVM {
         return SavedWeatherCellVM(weatherModel: loadedWeatherLogs[at.row])
     }
@@ -77,7 +85,7 @@ class SavedWeatherVM {
         
         firstly {
             locationProvider.getCurrentLocation()
-        }.then(on: DispatchQueue.global(qos: .userInteractive)) { (location) in
+        }.then(on: DispatchQueue.global(qos: .default)) { (location) in
             self.weatherRepository.insertWeatherLog(for: location)
         }.ensure {
             self.loggingWeather = false
@@ -89,10 +97,6 @@ class SavedWeatherVM {
 }
 
 protocol SavedWeatherVMDelegate: class {
-    func weatherListWillChange()
-    func weatherListChanged()
-    func rowAdded(at: IndexPath)
-    func rowDeleted(at: IndexPath)
     func listVisibilityChanged(visible: Bool)
     func onError(title: String, message: String)
     func loggingStateChanged(_ isLogging: Bool)

@@ -14,7 +14,7 @@ class RealmWeatherCache {
     // MARK: Vars
     
     static let shared = RealmWeatherCache()
-    private let realm = try!  Realm()
+    private let realm = try! Realm()
     
     // MARK: Init
     

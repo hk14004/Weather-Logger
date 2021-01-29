@@ -27,7 +27,7 @@ class SavedWeatherVC: UIViewController {
     
     private let viewModel = SavedWeatherVM()
     
-    private lazy var source = DataSource<Int, WeatherData>(tableView: self.tableView) { (tableView,indexPath, item) -> UITableViewCell? in
+    private lazy var source = WeatherDataSource<Int, WeatherData>(tableView: self.tableView) { (tableView,indexPath, item) -> UITableViewCell? in
         let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         let cellVM = self.viewModel.getWeatherCellVM(at: indexPath)
         cell.setup(with: cellVM)
@@ -38,11 +38,15 @@ class SavedWeatherVC: UIViewController {
     // MARK: Functions
     
     override func viewDidLoad() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+        setupNavigationBar()
         setupTableView()
         setupLoadingView()
         viewModel.delegate = self
         viewModel.loadAndObserveLogs()
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func setupTableView() {
@@ -123,23 +127,7 @@ extension SavedWeatherVC: UITableViewDelegate {
     }
 }
 
-extension SavedWeatherVC: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.loadedWeatherLogs.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        let cellVM = viewModel.getWeatherCellVM(at: indexPath)
-        cell.setup(with: cellVM)
-
-        return cell
-    }
-}
+// MARK: SavedWeatherVMDelegate
 
 extension SavedWeatherVC: SavedWeatherVMDelegate {
     func reloadWeatherLogTable() {
@@ -157,22 +145,6 @@ extension SavedWeatherVC: SavedWeatherVMDelegate {
         displayConfirmationAlert(title: title, message: message)
     }
     
-    func rowAdded(at: IndexPath) {
-        tableView.insertRows(at: [at], with: .automatic)
-    }
-    
-    func rowDeleted(at: IndexPath) {
-        tableView.deleteRows(at: [at], with: .left)
-    }
-    
-    func weatherListWillChange() {
-        tableView.beginUpdates()
-    }
-    
-    func weatherListChanged() {
-        tableView.endUpdates()
-    }
-    
     func listVisibilityChanged(visible: Bool) {
         if visible {
             handleVisibleTable()
@@ -180,12 +152,4 @@ extension SavedWeatherVC: SavedWeatherVMDelegate {
             handleInvisibleTable()
         }
     }
-}
-
-class DataSource<T: Hashable,U: Hashable>: UITableViewDiffableDataSource<T, U> {
-    // ...
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    // ...
 }

@@ -16,6 +16,7 @@
 		D43D375C258ED006005FCACD /* CoreDataWeatherCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D375B258ED006005FCACD /* CoreDataWeatherCache.swift */; };
 		D43FF9ED257FBBA30085E382 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FF9EC257FBBA30085E382 /* WeatherService.swift */; };
 		D43FFA0A257FBE5E0085E382 /* CLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FFA09257FBE5E0085E382 /* CLService.swift */; };
+		D4430AE425C4BA860050B2AC /* WeatherDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4430AE325C4BA860050B2AC /* WeatherDataSource.swift */; };
 		D44DD2A72590519B00FA90EA /* DomainModelAbstraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DD2A62590519B00FA90EA /* DomainModelAbstraction.swift */; };
 		D452D6D5258D6790004691F2 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D452D6D4258D6790004691F2 /* WeatherData.swift */; };
 		D452D6DC258D7F1C004691F2 /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D452D6DB258D7F1C004691F2 /* WeatherRepository.swift */; };
@@ -58,6 +59,7 @@
 		D43D375B258ED006005FCACD /* CoreDataWeatherCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataWeatherCache.swift; sourceTree = "<group>"; };
 		D43FF9EC257FBBA30085E382 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		D43FFA09257FBE5E0085E382 /* CLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLService.swift; sourceTree = "<group>"; };
+		D4430AE325C4BA860050B2AC /* WeatherDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataSource.swift; sourceTree = "<group>"; };
 		D44DD2A62590519B00FA90EA /* DomainModelAbstraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModelAbstraction.swift; sourceTree = "<group>"; };
 		D452D6D4258D6790004691F2 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		D452D6DB258D7F1C004691F2 /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 			children = (
 				D44BC572258CF5290029CBF5 /* Extensions */,
 				D4909472257928CC006D986A /* SavedWeatherCellVM.swift */,
+				D4430AE325C4BA860050B2AC /* WeatherDataSource.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				D474135925912CB800D6AC55 /* RealmWeatherCache.swift in Sources */,
 				D498E4BC2590624D006FB4DC /* WeatherData+WeatherJSON.swift in Sources */,
 				D43FFA0A257FBE5E0085E382 /* CLService.swift in Sources */,
+				D4430AE425C4BA860050B2AC /* WeatherDataSource.swift in Sources */,
 				D452D6DC258D7F1C004691F2 /* WeatherRepository.swift in Sources */,
 				D49094582578F77E006D986A /* WeatherJSONResponse.swift in Sources */,
 				D49094242578EE53006D986A /* SceneDelegate.swift in Sources */,
