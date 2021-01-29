@@ -27,7 +27,7 @@ class SavedWeatherVC: UIViewController {
     
     private let viewModel = SavedWeatherVM()
     
-    private lazy var source = WeatherDataSource<Int, WeatherData>(tableView: self.tableView) { (tableView,indexPath, item) -> UITableViewCell? in
+    private lazy var source = WeatherDataSource<Int, WeatherData>(tableView: tableView) { (tableView,indexPath, item) -> UITableViewCell? in
         let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         let cellVM = self.viewModel.getWeatherCellVM(at: indexPath)
         cell.setup(with: cellVM)

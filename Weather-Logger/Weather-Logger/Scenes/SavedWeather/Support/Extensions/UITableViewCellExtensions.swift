@@ -9,8 +9,8 @@ import UIKit
 
 extension UITableViewCell {
     func setup(with viewModel: SavedWeatherCellVM) {
-        textLabel?.text = viewModel.cellTitle
-        detailTextLabel?.text = viewModel.dateString
+        textLabel?.text = viewModel.title
+        detailTextLabel?.text = viewModel.subtitle
         accessoryType = .disclosureIndicator
     }
 }

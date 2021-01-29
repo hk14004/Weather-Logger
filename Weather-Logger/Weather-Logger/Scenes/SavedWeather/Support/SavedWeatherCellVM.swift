@@ -9,36 +9,24 @@ import Foundation
 
 class SavedWeatherCellVM {
     
-    var cellTitle: String {
-        get {
-            var title = ""
-            if !tempString.isEmpty {
-                title += tempString
-            }
-            
-            if !city.isEmpty {
-                title = "\(city), " + title
-            }
-            return title
-        }
+    // MARK: Variables
+    
+    private let weatherData: WeatherData
+    
+    var title: String {
+        "\(weatherData.city), \(Measurement(value: weatherData.temp, unit: UnitTemperature.celsius))"
     }
-    let tempString: String
 
-    let dateString: String
-    
-    let city: String
-    
-    init(weatherModel: WeatherData) {
-        let tempMeasurement = Measurement(value: weatherModel.temp, unit: UnitTemperature.celsius)
-        tempString = "\(tempMeasurement)"
-        dateString = SavedWeatherCellVM.formatWeather(date: weatherModel.date)
-        city = weatherModel.city
-    }
-    
-    private static func formatWeather(date: Date) -> String {
+    var subtitle: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .medium
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: weatherData.date)
+    }
+    
+    // MARK: Init
+    
+    init(weatherModel: WeatherData) {
+        weatherData = weatherModel
     }
 }
