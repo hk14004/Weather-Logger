@@ -50,6 +50,7 @@ class SavedWeatherVC: UIViewController {
     }
     
     private func setupTableView() {
+        changeState(tableIsHidden: viewModel.tableIsHidden)
         tableView.delegate = self
         tableView.tableFooterView = UIView()
     }
@@ -147,7 +148,7 @@ extension SavedWeatherVC: SavedWeatherVMDelegate {
         displayConfirmationAlert(title: title, message: message)
     }
     
-    func tableStateChanged(visible: Bool) {
-        changeState(tableIsHidden: !visible)
+    func tableStateChanged(isHidden: Bool) {
+        changeState(tableIsHidden: isHidden)
     }
 }

@@ -92,8 +92,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add logs by tapping +" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYk-f4-4ft">
-                                <rect key="frame" x="0.0" y="427.5" width="414" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <color key="textColor" systemColor="systemGray5Color"/>
                             </label>
@@ -104,13 +103,12 @@
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1gC-CK-nE8"/>
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Zrv-KV-Gbh"/>
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="d6i-PF-uJl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pYk-f4-4ft" secondAttribute="bottom" id="dor-oy-HSd"/>
+                            <constraint firstItem="pYk-f4-4ft" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="pNU-qn-DUT"/>
                             <constraint firstItem="mnH-5b-8yl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="qGw-ue-gLw"/>
+                            <constraint firstItem="pYk-f4-4ft" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vOI-wv-HC2"/>
+                            <constraint firstItem="pYk-f4-4ft" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ybt-O8-cck"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="pYk-f4-4ft"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Weather Logs" largeTitleDisplayMode="always" id="b85-3B-Ksi">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Lgv-Vm-oxN">
