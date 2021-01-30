@@ -54,14 +54,9 @@ class SavedWeatherVC: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    private func handleInvisibleTable() {
-        tableView.isHidden = true
-        emptyTableLabel.isHidden = false
-    }
-    
-    private func handleVisibleTable() {
-        tableView.isHidden = false
-        emptyTableLabel.isHidden = true
+    private func changeState(tableIsHidden: Bool) {
+        tableView.isHidden = tableIsHidden
+        emptyTableLabel.isHidden = !tableIsHidden
     }
     
     @IBAction func logCurrentWeather(_ sender: UIBarButtonItem) {
@@ -73,24 +68,29 @@ class SavedWeatherVC: UIViewController {
     }
     
     private func setupLoadingView() {
+        // Setup
         if viewModel.loggingWeather {
             loadingSpinner.startAnimating()
-            loadingSpinner.isHidden = false
         }
+        
+        loadingSpinner.hidesWhenStopped = true
+        
+        // Hierarchy
         view.addSubview(loadingSpinner)
+        
+        // Layout
         loadingSpinner.translatesAutoresizingMaskIntoConstraints = false
         loadingSpinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         loadingSpinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func changeState(loading: Bool) {
+        controls(enabled: !loading)
+        loadingSpinner.isHidden = !loading
+        
         if loading {
-            controls(enabled: false)
-            loadingSpinner.isHidden = false
             loadingSpinner.startAnimating()
         } else {
-            controls(enabled: true)
-            loadingSpinner.isHidden = true
             loadingSpinner.stopAnimating()
         }
     }
@@ -99,6 +99,8 @@ class SavedWeatherVC: UIViewController {
         coordinator?.show(weather: weather)
     }
 }
+
+// MARK: UITableViewDelegate
 
 extension SavedWeatherVC: UITableViewDelegate {
     
@@ -145,11 +147,7 @@ extension SavedWeatherVC: SavedWeatherVMDelegate {
         displayConfirmationAlert(title: title, message: message)
     }
     
-    func listVisibilityChanged(visible: Bool) {
-        if visible {
-            handleVisibleTable()
-        } else {
-            handleInvisibleTable()
-        }
+    func tableStateChanged(visible: Bool) {
+        changeState(tableIsHidden: !visible)
     }
 }

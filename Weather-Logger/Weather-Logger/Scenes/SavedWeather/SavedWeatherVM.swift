@@ -35,7 +35,7 @@ class SavedWeatherVM {
     private(set) var loadedWeatherLogs: [WeatherData] = [] {
         didSet {
             if (oldValue.isEmpty != loadedWeatherLogs.isEmpty) {
-                delegate?.listVisibilityChanged(visible: !loadedWeatherLogs.isEmpty)
+                delegate?.tableStateChanged(visible: !loadedWeatherLogs.isEmpty)
             }
         }
     }
@@ -97,7 +97,7 @@ class SavedWeatherVM {
 }
 
 protocol SavedWeatherVMDelegate: class {
-    func listVisibilityChanged(visible: Bool)
+    func tableStateChanged(visible: Bool)
     func onError(title: String, message: String)
     func loggingStateChanged(_ isLogging: Bool)
     func reloadWeatherLogTable()
