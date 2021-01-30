@@ -51,7 +51,6 @@ class SavedWeatherVC: UIViewController {
     
     private func setupTableView() {
         tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
     }
     
