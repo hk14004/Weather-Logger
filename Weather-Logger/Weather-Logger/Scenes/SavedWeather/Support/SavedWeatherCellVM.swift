@@ -14,7 +14,7 @@ class SavedWeatherCellVM {
     private let weatherData: WeatherData
     
     var title: String {
-        "\(weatherData.city), \(Measurement(value: weatherData.temp, unit: UnitTemperature.celsius))"
+        "\(weatherData.city)"
     }
 
     var subtitle: String {
@@ -22,6 +22,14 @@ class SavedWeatherCellVM {
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .medium
         return dateFormatter.string(from: weatherData.date)
+    }
+    
+    var forecastImageData: Data? {
+        weatherData.iconImage.pngData()
+    }
+    
+    var temperature: String {
+        "\(Measurement(value: weatherData.temp, unit: UnitTemperature.celsius))"
     }
     
     // MARK: Init

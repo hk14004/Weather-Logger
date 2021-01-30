@@ -28,7 +28,7 @@ class SavedWeatherVC: UIViewController {
     private let viewModel = SavedWeatherVM()
     
     private lazy var source = WeatherDataSource<Int, WeatherData>(tableView: tableView) { (tableView,indexPath, item) -> UITableViewCell? in
-        let cell: UITableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        let cell: SavedWeatherCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         let cellVM = self.viewModel.getWeatherCellVM(at: indexPath)
         cell.setup(with: cellVM)
 
@@ -51,6 +51,7 @@ class SavedWeatherVC: UIViewController {
     
     private func setupTableView() {
         tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
     }
     

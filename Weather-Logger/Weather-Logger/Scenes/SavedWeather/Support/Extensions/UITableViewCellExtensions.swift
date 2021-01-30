@@ -7,10 +7,21 @@
 
 import UIKit
 
-extension UITableViewCell {
+class SavedWeatherCell: UITableViewCell {
+    
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var subtitle: UILabel!
+    @IBOutlet weak var forecastImageView: UIImageView!
+    @IBOutlet weak var temperature: UILabel!
+    
     func setup(with viewModel: SavedWeatherCellVM) {
-        textLabel?.text = viewModel.title
-        detailTextLabel?.text = viewModel.subtitle
-        accessoryType = .disclosureIndicator
+        if let forcastImageData = viewModel.forecastImageData {
+            forecastImageView.image = UIImage(data: forcastImageData)
+            //forecastImageView.backgroundColor = .red
+        }
+        
+        title.text = viewModel.title
+        subtitle.text = viewModel.subtitle
+        temperature.text = viewModel.temperature
     }
 }
