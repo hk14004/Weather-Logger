@@ -22,7 +22,7 @@ class SavedWeatherVC: UIViewController {
     weak var coordinator: MainCoordinator?
     
     private lazy var loadingSpinner: UIActivityIndicatorView = {
-        return UIActivityIndicatorView(style: .large)
+        return LoadingView(style: .large)
     }()
     
     private let viewModel = SavedWeatherVM()
