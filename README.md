@@ -1,4 +1,4 @@
-# Weather-Logger
+# Weather-Logger - In progress
 
 What does it do?
 1. Gets users current location
